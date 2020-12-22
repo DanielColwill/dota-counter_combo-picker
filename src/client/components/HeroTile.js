@@ -20,7 +20,7 @@ class HeroTile extends Component {
   }
 
   componentDidUpdate(){
-    this.getWinrate();
+    //this.getWinrate();
   }
 
   getHeroImg(name) {

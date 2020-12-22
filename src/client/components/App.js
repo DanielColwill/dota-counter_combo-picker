@@ -5,6 +5,8 @@ const axios = require("axios");
 class App extends Component {
   constructor(props) {
     super(props);
+    this.sortAlpha = this.sortAlpha.bind(this);
+    this.sortByKey = this.sortByKey.bind(this);
     this.state = {
       heroes: [],
       heroName: "",
@@ -33,7 +35,22 @@ class App extends Component {
 
   componentDidMount() {
     this.getHeroes();
-    //this.addSearchListener();
+    this.sortAlpha();
+  }
+
+  sortByKey(array, key) {
+    return array.sort(function (a, b) {
+      var x = a[key];
+      var y = b[key];
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  }
+
+  sortAlpha() {
+    this.setState({
+      heroes: this.sortByKey(this.state.heroes, "localized_name"),
+    });
+    console.log(this.state.heroes);
   }
 
   render() {
@@ -45,7 +62,9 @@ class App extends Component {
           <table class="table table-dark" id="heroTable">
             <thead>
               <tr>
-                <th scope="col">Heroes</th>
+                <th onClick={this.sortAlpha} scope="col">
+                  Heroes
+                </th>
                 <th scope="col">Winrate</th>
               </tr>
             </thead>
