@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
-import NavbarHeader from "./components/NavbarHeader";
+import App from "./client/components/App";
+import NavbarHeader from "./client/components/NavbarHeader";
 
 ReactDOM.render(
   <div>
