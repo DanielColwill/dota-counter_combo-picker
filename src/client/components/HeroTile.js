@@ -8,6 +8,7 @@ class HeroTile extends Component {
       id: this.props.id,
       heroName: this.props.heroName,
       winrate: 0,
+      heroes:this.props.heroes
     };
   }
 
@@ -79,12 +80,12 @@ class HeroTile extends Component {
         <td>
           <img
             class="col-md-2"
-            src={this.getHeroImg(this.state.heroName)}
+            src={this.getHeroImg(this.props.heroName)}
             alt=""
           ></img>
-          {this.state.heroName}
+          {this.props.heroName}
         </td>
-        <td>{this.state.id}</td>
+        <td>{this.props.id}</td>
       </tbody>
     );
   }
