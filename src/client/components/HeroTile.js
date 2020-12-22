@@ -14,14 +14,19 @@ class HeroTile extends Component {
   async getWinrate() {
     var url =
       "https://api.opendota.com/api/heroes/" + this.state.id + "/durations";
-    await axios.get(url).then((result) => {});
+    await axios.get(url).then((result) => {
+      console.log(result);
+    });
+  }
+
+  componentDidUpdate(){
+    this.getWinrate();
   }
 
   getHeroImg(name) {
     var temp = name.toLowerCase();
     var url = "https://api.opendota.com/apps/dota2/images/heroes/";
     var extension = "_full.png";
-    console.log(temp);
     switch (temp) {
       case "anti-mage":
         return url + "antimage" + extension;
@@ -30,7 +35,7 @@ class HeroTile extends Component {
       case "clockwerk":
         return url + "rattletrap" + extension;
       case "doom":
-        return url + "doombringer" + extension;
+        return url + "doom_bringer" + extension;
       case "io":
         return url + "wisp" + extension;
       case "lifestealer":
@@ -41,7 +46,7 @@ class HeroTile extends Component {
         return url + "furion" + extension;
       case "necrophos":
         return url + "necrolyte" + extension;
-      case "outworld devourer":
+      case "outworld destroyer":
         return url + "obsidian_destroyer" + extension;
       case "queen of pain":
         return url + "queenofpain" + extension;
@@ -75,6 +80,7 @@ class HeroTile extends Component {
           <img
             class="col-md-2"
             src={this.getHeroImg(this.state.heroName)}
+            alt=""
           ></img>
           {this.state.heroName}
         </td>

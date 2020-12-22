@@ -8,8 +8,18 @@ class App extends Component {
     this.state = {
       heroes: [],
       heroName: "",
-      id: 0
+      id: 0,
+      search: "",
     };
+  }
+
+  addSearchListener() {
+    var self = this;
+    var listener = document.getElementById("searchBar");
+    listener.addEventListener("change", function () {
+      self.setState({ search: document.getElementById("searchBar").value });
+      console.log(self.state.search);
+    });
   }
 
   getHeroes() {
@@ -23,15 +33,10 @@ class App extends Component {
 
   componentDidMount() {
     this.getHeroes();
+    //this.addSearchListener();
   }
 
   render() {
-    console.log(this.state.heroes);
-    //console.log(this.state.winrates);
-/*     const heroNames = this.state.heroes.map((hero) => (
-      <p>{hero.localized_name}</p>
-    )); */
-
     return (
       <div class="container h-100">
         <div class="row h-25 align-items-center">
@@ -44,9 +49,10 @@ class App extends Component {
                 <th scope="col">Winrate</th>
               </tr>
             </thead>
-              {this.state.heroes.map((hero, id) => {
-                return <HeroTile heroName={hero.localized_name} id={id} />;
-              })}
+
+            {this.state.heroes.map((hero, id) => {
+              return <HeroTile heroName={hero.localized_name} id={id} />;
+            })}
           </table>
           <div class="col-sm-2"></div>
         </div>
