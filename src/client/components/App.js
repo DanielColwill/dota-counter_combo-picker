@@ -70,7 +70,7 @@ class App extends Component {
             </thead>
 
             {this.state.heroes.map((hero, id) => {
-              return <HeroTile heroName={hero.localized_name} id={id} />;
+              return <HeroTile heroName={hero.localized_name} id={hero.id} />;
             })}
           </table>
           <div class="col-sm-2"></div>
