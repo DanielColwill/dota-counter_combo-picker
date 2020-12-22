@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import HeroTile from "./HeroTile";
 const axios = require("axios");
 
 class App extends Component {
@@ -6,7 +7,8 @@ class App extends Component {
     super(props);
     this.state = {
       heroes: [],
-      winrates: []
+      heroName: "",
+      id: 0
     };
   }
 
@@ -25,9 +27,11 @@ class App extends Component {
 
   render() {
     console.log(this.state.heroes);
-    const heroNames = this.state.heroes.map((hero) => (
+    //console.log(this.state.winrates);
+/*     const heroNames = this.state.heroes.map((hero) => (
       <p>{hero.localized_name}</p>
-    ));
+    )); */
+
     return (
       <div class="container h-100">
         <div class="row h-25 align-items-center">
@@ -40,10 +44,9 @@ class App extends Component {
                 <th scope="col">Winrate</th>
               </tr>
             </thead>
-            <tbody>
-              <td>{heroNames}</td>
-              <td>TestText</td>
-            </tbody>
+              {this.state.heroes.map((hero, id) => {
+                return <HeroTile heroName={hero.localized_name} id={id} />;
+              })}
           </table>
           <div class="col-sm-2"></div>
         </div>
