@@ -25,10 +25,10 @@ class App extends Component {
   }
 
   getHeroes() {
-    axios.get("http://localhost:4000/heroes").then((result) =>{
+    axios.get("http://localhost:4000/heroes").then((result) => {
       this.setState({
-        heroes: result.data
-      })
+        heroes: result.data,
+      });
     });
   }
 
@@ -67,9 +67,13 @@ class App extends Component {
                 <th scope="col">Winrate</th>
               </tr>
             </thead>
-
             {this.state.heroes.map((hero, id) => {
-              return <HeroTile heroName={hero.localized_name} id={hero.id} />;
+              return (
+                <HeroTile
+                  heroName={hero.localized_name}
+                  id={hero.id}
+                />
+              );
             })}
           </table>
           <div class="col-sm-2"></div>

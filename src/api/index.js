@@ -6,6 +6,8 @@ const publicPath = path.join(__dirname, '');
 
 var testRouter = require("./routes/test");
 var heroesRouter = require("./routes/heroes");
+var winrateRouter = require("./routes/winrate");
+var matchupRouter = require("./routes/matchups");
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +21,8 @@ app.use((req, res, next) => {
 
 app.use("/test",testRouter);
 app.use("/",heroesRouter);
+app.use("/",winrateRouter);
+app.use("/",matchupRouter);
 
 app.listen(4000, () => {
   console.log('Server is up!');

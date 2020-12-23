@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CounterCombo from "./counterCombos";
 const axios = require("axios");
 
 class HeroTile extends Component {
@@ -12,23 +13,15 @@ class HeroTile extends Component {
     };
   }
 
-  async getWinrate() {
-    var url =
-      "https://api.opendota.com/api/heroes/" + this.props.id + "/durations";
-    await axios
-      .get(url, {
-        headers: {
-          crossorigin: true,
-        },
-      })
-      .then((result) => {
-        console.log(result);
-      });
+  getWinrate(id) {
+    axios.get("http://localhost:4000/winrates/" + id).then((result) => {
+      console.log(result);
+    });
   }
 
-  componentDidMount() {
-    //this.getWinrate();
-  }
+  /*   componentDidMount() {
+    this.getWinrate();
+  } */
 
   getHeroImg(name) {
     var temp = name.toLowerCase();
@@ -80,9 +73,8 @@ class HeroTile extends Component {
   }
 
   render() {
-    //this.getWinrate();
     return (
-      <tbody>
+      <tbody data-toggle="collapse" data-target={"#app" + this.props.id}>
         <td>
           <img
             class="col-md-2"
@@ -92,6 +84,11 @@ class HeroTile extends Component {
           {this.props.heroName}
         </td>
         <td>{this.props.id}</td>
+        <CounterCombo
+          heroName={this.props.localized_name}
+          class="collapse" 
+          id={"#app" + this.props.id}
+        />
       </tbody>
     );
   }
