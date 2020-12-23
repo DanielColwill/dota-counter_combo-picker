@@ -25,11 +25,10 @@ class App extends Component {
   }
 
   getHeroes() {
-    var url = "https://api.opendota.com/api/heroes";
-    axios.get(url).then((result) => {
+    axios.get("http://localhost:4000/heroes").then((result) =>{
       this.setState({
-        heroes: result.data,
-      });
+        heroes: result.data
+      })
     });
   }
 

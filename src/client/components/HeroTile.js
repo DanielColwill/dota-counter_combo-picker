@@ -8,19 +8,25 @@ class HeroTile extends Component {
       id: this.props.id,
       heroName: this.props.heroName,
       winrate: 0,
-      heroes:this.props.heroes
+      heroes: this.props.heroes,
     };
   }
 
   async getWinrate() {
     var url =
-      "https://api.opendota.com/api/heroes/" + this.state.id + "/durations";
-    await axios.get(url).then((result) => {
-      console.log(result);
-    });
+      "https://api.opendota.com/api/heroes/" + this.props.id + "/durations";
+    await axios
+      .get(url, {
+        headers: {
+          crossorigin: true,
+        },
+      })
+      .then((result) => {
+        console.log(result);
+      });
   }
 
-  componentDidUpdate(){
+  componentDidMount() {
     //this.getWinrate();
   }
 
