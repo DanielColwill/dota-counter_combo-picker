@@ -16,9 +16,11 @@ class HeroTile extends Component {
   }
 
   getWinrate(id) {
-    axios.get("http://localhost:4000/winrates/" + this.state.id).then((result) => {
-      console.log(result);
-    });
+    axios
+      .get("http://localhost:4000/winrates/" + this.state.id)
+      .then((result) => {
+        console.log(result);
+      });
   }
 
   /*   componentDidMount() {
@@ -88,30 +90,28 @@ class HeroTile extends Component {
   render() {
     return (
       <tbody>
-        <td>
-          <img
-            class="col-md-2"
-            src={this.getHeroImg(this.props.heroName)}
-            alt=""
-          ></img>
-          {this.props.heroName}
-        </td>
-        <td class="align-middle">
-          {" "}
-          <a
-            scope="row"
-            class="btn btn-primary text-center align-middle"
-            align="center"
-            onClick={this.toggle}
-          >
-            Details
-          </a>
-        </td>
+        <tr>
+          <td>
+            <img
+              class="col-md-2"
+              src={this.getHeroImg(this.props.heroName)}
+              alt=""
+            ></img>
+            {this.props.heroName}
+          </td>
+          <td class="align-middle">
+            {" "}
+            <a
+              class="btn btn-primary text-center align-middle"
+              align="center"
+              onClick={this.toggle}
+            >
+              Details
+            </a>
+          </td>
+        </tr>
         {this.state.open ? (
-          <CounterCombo
-            heroName={this.props.heroName}
-            id={this.props.id}
-          />
+          <CounterCombo heroName={this.props.heroName} id={this.props.id} />
         ) : null}
       </tbody>
     );

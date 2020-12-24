@@ -57,27 +57,24 @@ class App extends Component {
     return (
       <div class="container h-100">
         <div class="row h-25 align-items-center">
-          <div class="col-sm-2"></div>
+          <div class="col-sm-1"></div>
           {/* content */}
-          <table class="table table-dark" id="heroTable">
-            <thead>
-              <tr>
-                <th onClick={this.sortAlpha} scope="col">
-                  Heroes
-                </th>
-                <th scope="col">Combos/Counters</th>
-              </tr>
-            </thead>
-            {this.state.heroes.map((hero, id) => {
-              return (
-                <HeroTile
-                  heroName={hero.localized_name}
-                  id={hero.id}
-                />
-              );
-            })}
-          </table>
-          <div class="col-sm-2"></div>
+          <div class="table-responsive">
+            <table class="table table-dark w-100 d-block d-md-table" id="heroTable">
+              <thead>
+                <tr>
+                  <th onClick={this.sortAlpha} scope="col">
+                    Heroes
+                  </th>
+                  <th scope="col">Combos/Counters</th>
+                </tr>
+              </thead>
+              {this.state.heroes.map((hero, id) => {
+                return <HeroTile heroName={hero.localized_name} id={hero.id} />;
+              })}
+            </table>
+          </div>
+          <div class="col-sm-1"></div>
         </div>
       </div>
     );
