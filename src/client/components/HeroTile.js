@@ -5,16 +5,18 @@ const axios = require("axios");
 class HeroTile extends Component {
   constructor(props) {
     super(props);
+    this.toggle = this.toggle.bind(this);
     this.state = {
       id: this.props.id,
       heroName: this.props.heroName,
       winrate: 0,
       heroes: this.props.heroes,
+      open: false,
     };
   }
 
   getWinrate(id) {
-    axios.get("http://localhost:4000/winrates/" + id).then((result) => {
+    axios.get("http://localhost:4000/winrates/" + this.state.id).then((result) => {
       console.log(result);
     });
   }
@@ -71,10 +73,21 @@ class HeroTile extends Component {
         return url + temp + extension;
     }
   }
+  toggle() {
+    if (this.state.open === true) {
+      this.setState({
+        open: false,
+      });
+    } else {
+      this.setState({
+        open: true,
+      });
+    }
+  }
 
   render() {
     return (
-      <tbody data-toggle="collapse" data-target={"#app" + this.props.id}>
+      <tbody>
         <td>
           <img
             class="col-md-2"
@@ -83,12 +96,23 @@ class HeroTile extends Component {
           ></img>
           {this.props.heroName}
         </td>
-        <td>{this.props.id}</td>
-        <CounterCombo
-          heroName={this.props.localized_name}
-          class="collapse" 
-          id={"#app" + this.props.id}
-        />
+        <td class="align-middle">
+          {" "}
+          <a
+            scope="row"
+            class="btn btn-primary text-center align-middle"
+            align="center"
+            onClick={this.toggle}
+          >
+            Details
+          </a>
+        </td>
+        {this.state.open ? (
+          <CounterCombo
+            heroName={this.props.heroName}
+            id={this.props.id}
+          />
+        ) : null}
       </tbody>
     );
   }

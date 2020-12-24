@@ -3,7 +3,7 @@ var router = express.Router();
 const axios = require("axios");
 
 router.get("/matchups/:id", function(req, res, next) {
-  var url = "https://api.opendota.com/api/heroes/" + id + "/matchups";
+  var url = "https://api.opendota.com/api/heroes/" + req.params.id + "/matchups";
   axios
     .get(url, {
       headers: {

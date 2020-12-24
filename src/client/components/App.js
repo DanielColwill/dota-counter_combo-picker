@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import HeroTile from "./HeroTile";
+
 const axios = require("axios");
 
 class App extends Component {
@@ -64,7 +65,7 @@ class App extends Component {
                 <th onClick={this.sortAlpha} scope="col">
                   Heroes
                 </th>
-                <th scope="col">Winrate</th>
+                <th scope="col">Combos/Counters</th>
               </tr>
             </thead>
             {this.state.heroes.map((hero, id) => {
