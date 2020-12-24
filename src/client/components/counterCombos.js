@@ -10,6 +10,12 @@ class CounterCombo extends Component {
       winrate: 0,
       heroes: this.props.heroes,
       matchups: [],
+      goodCombo:0,
+      betterCombo:0,
+      bestCombo:0,
+      goodCounter:0,
+      betterCounter:0,
+      bestCounter:0
     };
   }
 
@@ -22,47 +28,49 @@ class CounterCombo extends Component {
         });
       });
   }
+  getWinrate(){
+    axios
+    .get("http://localhost:4000/winrates/" + this.state.id)
+    .then((result) => {
+      console.log(result);
+    });
+  }
 
   componentDidMount() {
-    this.getMatchups();
+    //this.getMatchups();
+    this.getWinrate()
   }
 
   getCombosCounters() {
-    var goodCombo,
-      betterCombo,
-      bestCombo,
-      goodCounter,
-      betterCounter,
-      bestCounter;
+    this.setState({
+      goodCombo: this.state.matchups.data[0].wins / this.state.matchups.data[0].games_played,
+      betterCombo: this.state.matchups.data[0].wins / this.state.matchups.data[0].games_played,
+      bestCombo: this.state.matchups.data[0].wins / this.state.matchups.data[0].games_played
+    });
     for (var i = 0; i < this.state.matchups.length; i++) {
       if (this.state.matchups.data[i].games_played > 50) {
-        var temp;
-        temp =
-          this.state.matchups.data[i].wins /
-          this.state.matchups.data[i].games_played;
-        if (temp > goodCombo) {
-          goodCombo = temp;
-        }
+        var temp = this.state.matchups.data[i].wins / this.state.matchups.data[i].games_played;
       }
+
     }
+    return 
   }
 
   render() {
     console.log(this.state.matchups);
     return (
-        <tbody class="w-100 d-md-table">
-          <tr>
-            <th >Combos</th>
-            <th >Counters</th>
-            <th >Winrate</th>
-          </tr>
-          <tr >
-            <td >TEST</td>
-            <td >TEST</td>
-            <td >1</td>
-          </tr>
-        </tbody>
-
+      <tbody class="w-100 d-md-table">
+        <tr>
+          <th>Combos</th>
+          <th>Counters</th>
+          <th>Winrate</th>
+        </tr>
+        <tr>
+          <td>TEST</td>
+          <td>TEST</td>
+          <td>{this.state.winrate}</td>
+        </tr>
+      </tbody>
     );
   }
 }

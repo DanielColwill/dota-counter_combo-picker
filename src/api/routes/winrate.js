@@ -3,11 +3,12 @@ var router = express.Router();
 const axios = require("axios");
 
 router.get("/winrates/:id", function (req, res, next) {
-  res.send(getWinrate(req.params.id));
+  getWinrate(req.params.id);
 });
 
-async function getWinrate() {
-  var url = "https://api.opendota.com/api/heroes/" + id + "/durations";
+async function getWinrate(id) {
+  var url =
+    "https://api.opendota.com/api/heroes/" + id + "/durations";
   await axios
     .get(url, {
       headers: {
@@ -18,12 +19,14 @@ async function getWinrate() {
       var gamesPlayed;
       var wins;
       var winrate;
+      console.log(result.data);
       for (var i = 0; i < result.data.length; i++) {
-        gamesPlayed += result.data.games_played[i];
-        wins += result.data.wins[i];
+        //gamesPlayed += result.data.games_played[i];
+        //wins += result.data.wins[i];
       }
-      winrate = wins / gamesPlayed;
-      return winrate
+      /*       winrate = wins / gamesPlayed;
+      console.log(winrate);
+      res.send(winrate); */
     });
 }
 

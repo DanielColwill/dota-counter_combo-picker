@@ -15,13 +15,6 @@ class HeroTile extends Component {
     };
   }
 
-  getWinrate(id) {
-    axios
-      .get("http://localhost:4000/winrates/" + this.state.id)
-      .then((result) => {
-        console.log(result);
-      });
-  }
 
   /*   componentDidMount() {
     this.getWinrate();
