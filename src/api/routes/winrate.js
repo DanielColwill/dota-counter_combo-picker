@@ -7,8 +7,7 @@ router.get("/winrates/:id", function (req, res, next) {
 });
 
 async function getWinrate(id) {
-  var url =
-    "https://api.opendota.com/api/heroes/" + id + "/durations";
+  var url = "https://api.opendota.com/api/heroes/" + id + "/durations";
   await axios
     .get(url, {
       headers: {
@@ -19,14 +18,13 @@ async function getWinrate(id) {
       var gamesPlayed;
       var wins;
       var winrate;
-      console.log(result.data);
       for (var i = 0; i < result.data.length; i++) {
-        //gamesPlayed += result.data.games_played[i];
-        //wins += result.data.wins[i];
+        gamesPlayed += result.data[i].games_played;
+        wins += result.data[i].wins;
       }
-      /*       winrate = wins / gamesPlayed;
+      winrate = wins / gamesPlayed;
       console.log(winrate);
-      res.send(winrate); */
+      res.send(winrate);
     });
 }
 
