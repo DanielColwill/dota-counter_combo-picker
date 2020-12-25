@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.sortAlpha = this.sortAlpha.bind(this);
     this.sortByKey = this.sortByKey.bind(this);
+    this.renderHeroes = this.renderHeroes.bind(this);
     this.state = {
       heroes: [],
       heroName: "",
@@ -57,18 +58,22 @@ class App extends Component {
     var list = [];
     if (this.state.search.length === 0) {
       {
-        this.state.heroes.map((hero, id) => {
+        return this.state.heroes.map((hero, id) => {
           return <HeroTile heroName={hero.localized_name} id={hero.id} />;
         });
       }
-    } else {
-      for (var i = 0; i < this.state.heroes; i++) {
-        if (this.state.heroes.localized_name[i].includes(this.state.search)) {
+    } else if (this.state.search.length > 0) {
+      console.log(this.state.heroes);
+      for (var i = 0; i < this.state.heroes.length; i++) {
+        if (this.state.heroes[i].localized_name.toLowerCase().includes(this.state.search)) {
           list.push(this.state.heroes[i]);
         }
       }
+      for (var g = 0; g < list.length; g++) {
+        console.log(list[g]);
+      }
       {
-        this.state.list.map((hero, id) => {
+        return list.map((hero, id) => {
           return <HeroTile heroName={hero.localized_name} id={hero.id} />;
         });
       }
@@ -94,12 +99,12 @@ class App extends Component {
                 </tr>
               </thead>
 
-              {this.renderHeroes}
+              {this.state.heroes.length > 0 ? this.renderHeroes() : null}
 
-              {this.state.heroes.map((hero, id) => {
+              {/* {this.state.heroes.map((hero, id) => {
+                console.log("test");
                 return <HeroTile heroName={hero.localized_name} id={hero.id} />;
-              })}
-              
+              })} */}
             </table>
           </div>
           <div class="col-sm-1"></div>

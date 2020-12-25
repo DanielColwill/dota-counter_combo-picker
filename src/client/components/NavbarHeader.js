@@ -34,7 +34,6 @@ class NavbarHeader extends Component {
         </Nav>
         <Form inline>
           <FormControl onChange={this.updateSearch} value={this.state.search}  is="searchBar" id="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-info">Search</Button>
         </Form>
       </Navbar>
     );
