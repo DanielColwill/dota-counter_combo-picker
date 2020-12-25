@@ -36,6 +36,7 @@ class App extends Component {
   componentDidMount() {
     this.getHeroes();
     this.sortAlpha();
+    this.addSearchListener();
   }
 
   sortByKey(array, key) {
@@ -50,7 +51,28 @@ class App extends Component {
     this.setState({
       heroes: this.sortByKey(this.state.heroes, "localized_name"),
     });
-    console.log(this.state.heroes);
+  }
+
+  renderHeroes() {
+    var list = [];
+    if (this.state.search.length === 0) {
+      {
+        this.state.heroes.map((hero, id) => {
+          return <HeroTile heroName={hero.localized_name} id={hero.id} />;
+        });
+      }
+    } else {
+      for (var i = 0; i < this.state.heroes; i++) {
+        if (this.state.heroes.localized_name[i].includes(this.state.search)) {
+          list.push(this.state.heroes[i]);
+        }
+      }
+      {
+        this.state.list.map((hero, id) => {
+          return <HeroTile heroName={hero.localized_name} id={hero.id} />;
+        });
+      }
+    }
   }
 
   render() {
@@ -60,17 +82,24 @@ class App extends Component {
           <div class="col-sm-1"></div>
           {/* content */}
           <div class="table-responsive">
-            <table class="table table-hover table-dark w-100 d-block d-md-table" id="heroTable">
+            <table
+              class="table table-hover table-dark w-100 d-block d-md-table"
+              id="heroTable"
+            >
               <thead>
                 <tr>
-                  <th class="pl-4"onClick={this.sortAlpha} scope="col">
+                  <th class="pl-4" onClick={this.sortAlpha} scope="col">
                     Heroes
                   </th>
                 </tr>
               </thead>
+
+              {this.renderHeroes}
+
               {this.state.heroes.map((hero, id) => {
                 return <HeroTile heroName={hero.localized_name} id={hero.id} />;
               })}
+              
             </table>
           </div>
           <div class="col-sm-1"></div>

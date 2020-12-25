@@ -10,11 +10,11 @@ class NavbarHeader extends Component {
     }
   }
   
-  updateSearch = event =>{
+  updateSearch (event){
     this.setState({
       search:event.target.value
     })
-    console.log(this.state.search);
+    //console.log(this.state.search);
   }
 
   render() {
@@ -33,7 +33,7 @@ class NavbarHeader extends Component {
           <Nav.Link href="/">Home</Nav.Link>
         </Nav>
         <Form inline>
-          <FormControl value={this.state.search} onChange={this.updateSearch} is="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
+          <FormControl onChange={this.updateSearch} value={this.state.search}  is="searchBar" id="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-info">Search</Button>
         </Form>
       </Navbar>

@@ -9,7 +9,6 @@ ReactDOM.render(
     <NavbarHeader />,
     <App/>,
   </div>,
-
-  
+ 
   document.getElementById("root")
 );
