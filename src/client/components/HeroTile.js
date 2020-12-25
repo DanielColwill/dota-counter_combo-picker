@@ -91,16 +91,6 @@ class HeroTile extends Component {
             ></img>
             {this.props.heroName}
           </td>
-{/*           <td class="align-middle">
-            {" "}
-            <a
-              class="btn btn-primary text-center align-middle"
-              align="center"
-              onClick={this.toggle}
-            >
-              Details
-            </a>
-          </td> */}
         </tr>
         {this.state.open ? (
           <CounterCombo heroName={this.props.heroName} id={this.props.id} />

@@ -2,6 +2,21 @@ import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 
 class NavbarHeader extends Component {
+  constructor(){
+    super();
+    this.updateSearch = this.updateSearch.bind(this);
+    this.state = {
+      search:''
+    }
+  }
+  
+  updateSearch = event =>{
+    this.setState({
+      search:event.target.value
+    })
+    console.log(this.state.search);
+  }
+
   render() {
     return (
       <Navbar bg="dark" variant="dark">
@@ -18,7 +33,7 @@ class NavbarHeader extends Component {
           <Nav.Link href="/">Home</Nav.Link>
         </Nav>
         <Form inline>
-          <FormControl is="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
+          <FormControl value={this.state.search} onChange={this.updateSearch} is="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-info">Search</Button>
         </Form>
       </Navbar>
