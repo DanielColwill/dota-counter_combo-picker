@@ -32,7 +32,9 @@ class CounterCombo extends Component {
     axios
     .get("http://localhost:4000/winrates/" + this.state.id)
     .then((result) => {
-      console.log(result);
+      this.setState({
+        winrate: result.data,
+      });
     });
   }
 
@@ -57,7 +59,6 @@ class CounterCombo extends Component {
   }
 
   render() {
-    console.log(this.state.matchups);
     return (
       <tbody class="w-100 d-md-table">
         <tr>
