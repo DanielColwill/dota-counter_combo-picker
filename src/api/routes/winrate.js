@@ -21,8 +21,8 @@ router.get("/winrates/:id", function (req, res, next) {
         //console.log(wins);
       }
       winrate = wins / gamesPlayed;
-      winrate = winrate.toFixed(3);
       winrate = winrate*100;
+      winrate = winrate.toFixed(2);
       var result = '' + winrate;
       res.send(result);
     });

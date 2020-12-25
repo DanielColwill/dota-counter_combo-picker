@@ -15,7 +15,6 @@ class HeroTile extends Component {
     };
   }
 
-
   /*   componentDidMount() {
     this.getWinrate();
   } */
@@ -82,7 +81,7 @@ class HeroTile extends Component {
 
   render() {
     return (
-      <tbody>
+      <tbody onClick={this.toggle}>
         <tr>
           <td>
             <img
@@ -92,7 +91,7 @@ class HeroTile extends Component {
             ></img>
             {this.props.heroName}
           </td>
-          <td class="align-middle">
+{/*           <td class="align-middle">
             {" "}
             <a
               class="btn btn-primary text-center align-middle"
@@ -101,7 +100,7 @@ class HeroTile extends Component {
             >
               Details
             </a>
-          </td>
+          </td> */}
         </tr>
         {this.state.open ? (
           <CounterCombo heroName={this.props.heroName} id={this.props.id} />

@@ -10,12 +10,12 @@ class CounterCombo extends Component {
       winrate: 0,
       heroes: this.props.heroes,
       matchups: [],
-      goodCombo:0,
-      betterCombo:0,
-      bestCombo:0,
-      goodCounter:0,
-      betterCounter:0,
-      bestCounter:0
+      goodCombo: 0,
+      betterCombo: 0,
+      bestCombo: 0,
+      goodCounter: 0,
+      betterCounter: 0,
+      bestCounter: 0,
     };
   }
 
@@ -28,48 +28,55 @@ class CounterCombo extends Component {
         });
       });
   }
-  getWinrate(){
+  getWinrate() {
     axios
-    .get("http://localhost:4000/winrates/" + this.state.id)
-    .then((result) => {
-      this.setState({
-        winrate: result.data,
+      .get("http://localhost:4000/winrates/" + this.state.id)
+      .then((result) => {
+        this.setState({
+          winrate: result.data,
+        });
       });
-    });
   }
 
   componentDidMount() {
     //this.getMatchups();
-    this.getWinrate()
+    this.getWinrate();
   }
 
   getCombosCounters() {
     this.setState({
-      goodCombo: this.state.matchups.data[0].wins / this.state.matchups.data[0].games_played,
-      betterCombo: this.state.matchups.data[0].wins / this.state.matchups.data[0].games_played,
-      bestCombo: this.state.matchups.data[0].wins / this.state.matchups.data[0].games_played
+      goodCombo:
+        this.state.matchups.data[0].wins /
+        this.state.matchups.data[0].games_played,
+      betterCombo:
+        this.state.matchups.data[0].wins /
+        this.state.matchups.data[0].games_played,
+      bestCombo:
+        this.state.matchups.data[0].wins /
+        this.state.matchups.data[0].games_played,
     });
     for (var i = 0; i < this.state.matchups.length; i++) {
       if (this.state.matchups.data[i].games_played > 50) {
-        var temp = this.state.matchups.data[i].wins / this.state.matchups.data[i].games_played;
+        var temp =
+          this.state.matchups.data[i].wins /
+          this.state.matchups.data[i].games_played;
       }
-
     }
-    return 
+    return;
   }
 
   render() {
     return (
-      <tbody class="w-100 d-md-table">
+      <tbody class="w-100 d-md-table ">
         <tr>
-          <th>Combos</th>
-          <th>Counters</th>
-          <th>Winrate</th>
+          <th class="text-center">Combos</th>
+          <th class="text-center">Counters</th>
+          <th class="text-center">Winrate</th>
         </tr>
         <tr>
-          <td>TEST</td>
-          <td>TEST</td>
-          <td>{this.state.winrate}</td>
+          <td class="text-center">TEST</td>
+          <td class="text-center">TEST</td>
+          <td class="text-center">{this.state.winrate}</td>
         </tr>
       </tbody>
     );

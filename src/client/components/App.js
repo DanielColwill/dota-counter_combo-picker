@@ -60,13 +60,12 @@ class App extends Component {
           <div class="col-sm-1"></div>
           {/* content */}
           <div class="table-responsive">
-            <table class="table table-dark w-100 d-block d-md-table" id="heroTable">
+            <table class="table table-hover table-dark w-100 d-block d-md-table" id="heroTable">
               <thead>
                 <tr>
-                  <th onClick={this.sortAlpha} scope="col">
+                  <th class="pl-4"onClick={this.sortAlpha} scope="col">
                     Heroes
                   </th>
-                  <th scope="col">Combos/Counters</th>
                 </tr>
               </thead>
               {this.state.heroes.map((hero, id) => {
