@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import HeroTile from "./HeroTile";
 const axios = require("axios");
 
 class CounterCombo extends Component {
@@ -43,37 +44,76 @@ class CounterCombo extends Component {
     this.getWinrate();
   }
 
+  sortByKey(array, key) {
+    return array.sort(function (a, b) {
+      var x = a[key];
+      var y = b[key];
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  }
+
   getCombosCounters() {
-    if (typeof this.state.matchups[0] !== undefined) {
-      this.setState({
-        goodCombo:
-          this.state.matchups[0].wins / this.state.matchups[0].games_played,
-        betterCombo:
-          this.state.matchups[0].wins / this.state.matchups[0].games_played,
-        bestCombo:
-          this.state.matchups[0].wins / this.state.matchups[0].games_played,
-      });
-      for (var i = 0; i < this.state.matchups.length; i++) {
-        if (this.state.matchups[i].games_played > 50) {
-          var temp =
-            this.state.matchups[i].wins / this.state.matchups[i].games_played;
-          console.log(temp);
+    var combos = [
+      { id: "", winrate: 0 },
+      { id: "", winrate: 0 },
+      { id: "", winrate: 0 },
+    ];
+    for (var i = 0; i < this.state.matchups.length; i++) {
+      if (this.state.matchups[i].games_played > 50) {
+        var temp =
+          this.state.matchups[i].wins / this.state.matchups[i].games_played;
+        if (temp > combos[combos.length - 1].winrate) {
+          combos.push({ id: this.state.matchups[i].hero_id, winrate: temp });
         }
       }
+    }
+    // for (var i = combos.length - 1; i > combos.length - 4; i--) {
+    //   console.log(combos[i]);
+    // }
+    combos.splice(0, combos.length - 3);
+    return combos;
+  }
+
+  test() {
+    var combos = [
+      { id: "", winrate: 0.76 },
+      { id: "", winrate: 0.5 },
+      { id: "", winrate: 0.32 },
+      { id: "", winrate: 0.89 },
+      { id: "", winrate: 0.11 },
+      { id: "", winrate: 0.27 },
+      { id: "", winrate: 0.66 },
+    ];
+    for (var j = 0; j < combos.length; j++) {
+      console.log(combos[j]);
+    }
+    this.sortByKey(combos, "winrate");
+    for (var j = 0; j < combos.length; j++) {
+      console.log(combos[j]);
     }
   }
 
   render() {
-    //this.getCombosCounters();
+    var temp = this.getCombosCounters();
+    console.log(temp);
+    console.log(this.props.heroes);
+    //console.log(this.props.heroes[temp[0].id].localized_name);
+    console.log(this.props.heroes[temp[0].id]);
+    //this.test();
     return (
       <tbody class="w-100 d-md-table ">
         <tr>
-          <th class="text-center">Combos</th>
-          <th class="text-center">Counters</th>
+          <th class="text-center">Good Against</th>
+          <th class="text-center">Countered By</th>
           <th class="text-center">Winrate</th>
         </tr>
         <tr>
-          <td class="text-center">TEST</td>
+            {this.props.heroes[temp[0].id] !== undefined ? (
+              <HeroTile
+                heroName={this.props.heroes[temp[0].id].localized_name}
+                id={temp[temp.length - 1].id}
+              />
+            ) : null}
           <td class="text-center">TEST</td>
           <td class="text-center">{this.state.winrate}</td>
         </tr>

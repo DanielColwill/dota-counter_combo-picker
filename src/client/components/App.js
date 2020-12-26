@@ -52,7 +52,7 @@ class App extends Component {
     if (this.state.search.length === 0) {
       {
         return this.state.heroes.map((hero, id) => {
-          return <HeroTile heroName={hero.localized_name} id={hero.id} />;
+          return <HeroTile heroes={this.state.heroes} heroName={hero.localized_name} id={hero.id} />;
         });
       }
     } else if (this.state.search.length > 0) {
@@ -67,7 +67,7 @@ class App extends Component {
       }
       {
         return list.map((hero, id) => {
-          return <HeroTile heroName={hero.localized_name} id={hero.id} />;
+          return <HeroTile heroes={this.state.heroes} heroName={hero.localized_name} id={hero.id} />;
         });
       }
     }

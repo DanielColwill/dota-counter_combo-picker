@@ -93,7 +93,7 @@ class HeroTile extends Component {
           </td>
         </tr>
         {this.state.open ? (
-          <CounterCombo heroName={this.props.heroName} id={this.props.id} />
+          <CounterCombo heroes={this.props.heroes} heroName={this.props.heroName} id={this.props.id} />
         ) : null}
       </tbody>
     );
