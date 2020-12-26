@@ -6,7 +6,6 @@ import NavbarHeader from "./client/components/NavbarHeader";
 
 ReactDOM.render(
   <div>
-    <NavbarHeader />,
     <App/>,
   </div>,
  

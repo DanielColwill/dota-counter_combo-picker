@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import HeroTile from "./HeroTile";
+import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 
 const axios = require("axios");
 
@@ -9,6 +10,7 @@ class App extends Component {
     this.sortAlpha = this.sortAlpha.bind(this);
     this.sortByKey = this.sortByKey.bind(this);
     this.renderHeroes = this.renderHeroes.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
     this.state = {
       heroes: [],
       heroName: "",
@@ -17,14 +19,14 @@ class App extends Component {
     };
   }
 
-  addSearchListener() {
-    var self = this;
-    var listener = document.getElementById("searchBar");
-    listener.addEventListener("change", function () {
-      self.setState({ search: document.getElementById("searchBar").value });
-      console.log(self.state.search);
-    });
-  }
+  // addSearchListener() {
+  //   var self = this;
+  //   var listener = document.getElementById("searchBar");
+  //   listener.addEventListener("change", function () {
+  //     self.setState({ search: document.getElementById("searchBar").value });
+  //     console.log(self.state.search);
+  //   });
+  // }
 
   getHeroes() {
     axios.get("http://localhost:4000/heroes").then((result) => {
@@ -37,7 +39,7 @@ class App extends Component {
   componentDidMount() {
     this.getHeroes();
     this.sortAlpha();
-    this.addSearchListener();
+    //this.addSearchListener();
   }
 
   sortByKey(array, key) {
@@ -65,7 +67,11 @@ class App extends Component {
     } else if (this.state.search.length > 0) {
       console.log(this.state.heroes);
       for (var i = 0; i < this.state.heroes.length; i++) {
-        if (this.state.heroes[i].localized_name.toLowerCase().includes(this.state.search)) {
+        if (
+          this.state.heroes[i].localized_name
+            .toLowerCase()
+            .includes(this.state.search)
+        ) {
           list.push(this.state.heroes[i]);
         }
       }
@@ -80,34 +86,68 @@ class App extends Component {
     }
   }
 
+  updateSearch (event){
+    this.setState({
+      search:event.target.value
+    })
+    console.log(this.state.search);
+  }
+
   render() {
     return (
-      <div class="container h-100">
-        <div class="row h-25 align-items-center">
-          <div class="col-sm-1"></div>
-          {/* content */}
-          <div class="table-responsive">
-            <table
-              class="table table-hover table-dark w-100 d-block d-md-table"
-              id="heroTable"
-            >
-              <thead>
-                <tr>
-                  <th class="pl-4" onClick={this.sortAlpha} scope="col">
-                    Heroes
-                  </th>
-                </tr>
-              </thead>
+      <div>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="/">
+            Dota App
+            <img
+              src="https://1000logos.net/wp-content/uploads/2019/03/Dota-2-Logo.png"
+              align="middle"
+              height="30"
+              alt=""
+            ></img>
+          </Navbar.Brand>
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+          </Nav>
+          <Form inline>
+            <FormControl
+              onChange={this.updateSearch}
+              value={this.state.search}
+              is="searchBar"
+              id="searchBar"
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+            />
+          </Form>
+        </Navbar>
+        <div class="pt-5 container h-100">
+          <div class="row h-25 align-items-center">
+            <div class="col-sm-1"></div>
+            {/* content */}
+            <div class="table-responsive">
+              <table
+                class="table table-hover table-dark w-100 d-block d-md-table"
+                id="heroTable"
+              >
+                <thead>
+                  <tr>
+                    <th class="pl-4" onClick={this.sortAlpha} scope="col">
+                      Heroes
+                    </th>
+                  </tr>
+                </thead>
 
-              {this.state.heroes.length > 0 ? this.renderHeroes() : null}
+                {this.state.heroes.length > 0 ? this.renderHeroes() : null}
 
-              {/* {this.state.heroes.map((hero, id) => {
+                {/* {this.state.heroes.map((hero, id) => {
                 console.log("test");
                 return <HeroTile heroName={hero.localized_name} id={hero.id} />;
               })} */}
-            </table>
+              </table>
+            </div>
+            <div class="col-sm-1"></div>
           </div>
-          <div class="col-sm-1"></div>
         </div>
       </div>
     );
