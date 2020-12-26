@@ -19,15 +19,6 @@ class App extends Component {
     };
   }
 
-  // addSearchListener() {
-  //   var self = this;
-  //   var listener = document.getElementById("searchBar");
-  //   listener.addEventListener("change", function () {
-  //     self.setState({ search: document.getElementById("searchBar").value });
-  //     console.log(self.state.search);
-  //   });
-  // }
-
   getHeroes() {
     axios.get("http://localhost:4000/heroes").then((result) => {
       this.setState({
@@ -65,7 +56,6 @@ class App extends Component {
         });
       }
     } else if (this.state.search.length > 0) {
-      console.log(this.state.heroes);
       for (var i = 0; i < this.state.heroes.length; i++) {
         if (
           this.state.heroes[i].localized_name
@@ -74,9 +64,6 @@ class App extends Component {
         ) {
           list.push(this.state.heroes[i]);
         }
-      }
-      for (var g = 0; g < list.length; g++) {
-        console.log(list[g]);
       }
       {
         return list.map((hero, id) => {
@@ -90,7 +77,6 @@ class App extends Component {
     this.setState({
       search:event.target.value
     })
-    console.log(this.state.search);
   }
 
   render() {
@@ -140,10 +126,6 @@ class App extends Component {
 
                 {this.state.heroes.length > 0 ? this.renderHeroes() : null}
 
-                {/* {this.state.heroes.map((hero, id) => {
-                console.log("test");
-                return <HeroTile heroName={hero.localized_name} id={hero.id} />;
-              })} */}
               </table>
             </div>
             <div class="col-sm-1"></div>
