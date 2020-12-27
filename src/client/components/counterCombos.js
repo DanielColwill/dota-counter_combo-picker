@@ -52,7 +52,7 @@ class CounterCombo extends Component {
     });
   }
 
-  getCombosCounters() {
+  getCombos() {
     var combos = [
       { id: "", winrate: 0 },
       { id: "", winrate: 0 },
@@ -63,46 +63,47 @@ class CounterCombo extends Component {
         var temp =
           this.state.matchups[i].wins / this.state.matchups[i].games_played;
         if (temp > combos[combos.length - 1].winrate) {
-          console.log(this.state.matchups[i]);
           combos.push({ id: this.state.matchups[i].hero_id, winrate: temp });
         }
       }
-    }
-    console.log("length: " + combos.length);
-    for (var i = combos.length - 1; i > combos.length - 4; i--) {
-      console.log(combos[i]);
     }
     combos.splice(0, combos.length - 3);
     return combos;
   }
 
-  test() {
-    var combos = [
-      { id: "", winrate: 0.76 },
-      { id: "", winrate: 0.5 },
-      { id: "", winrate: 0.32 },
-      { id: "", winrate: 0.89 },
-      { id: "", winrate: 0.11 },
-      { id: "", winrate: 0.27 },
-      { id: "", winrate: 0.66 },
+  getCounters() {
+    var counters = [
+      { id: "", winrate: 1 },
+      { id: "", winrate: 1 },
+      { id: "", winrate: 1 },
     ];
-    for (var j = 0; j < combos.length; j++) {
-      console.log(combos[j]);
+    for (var i = 0; i < this.state.matchups.length; i++) {
+      if (this.state.matchups[i].games_played > 50) {
+        var temp =
+          this.state.matchups[i].wins / this.state.matchups[i].games_played;
+        console.log(temp);
+        if (temp < counters[0].winrate) {
+          counters.unshift({
+            id: this.state.matchups[i].hero_id,
+            winrate: temp,
+          });
+        }
+      }
     }
-    this.sortByKey(combos, "winrate");
-    for (var j = 0; j < combos.length; j++) {
-      console.log(combos[j]);
+
+    console.log("length: " + counters.length);
+    for (var i = 0; i > counters.length; i++) {
+      console.log(counters[i]);
     }
+
+    counters.splice(3, counters.length);
+    return counters;
   }
 
   render() {
-    var temp = this.getCombosCounters();
-    console.log(temp);
-    console.log(this.props.heroes);
-    //console.log(this.props.heroes[temp[0].id].localized_name);
-    //console.log(this.props.heroes[temp[0].id]);
-    //console.log(temp[temp.length - 1]);
-    //this.test();
+    var tempCombo = this.getCombos();
+    var tempCounter = this.getCounters();
+    console.log(tempCounter);
     return (
       <tbody class="w-100 d-md-table ">
         <tr>
@@ -111,8 +112,9 @@ class CounterCombo extends Component {
           <th class="text-center">Winrate</th>
         </tr>
         <tr>
-          {this.props.heroes[temp[0].id] !== undefined
-            ? temp.map((index) => {
+          <td class="border-0">
+          {this.props.heroes[tempCombo[0].id] !== undefined
+            ? tempCombo.map((index) => {
                 var name;
                 for (var i = 0; i < this.props.heroes.length; i++) {
                   if (this.props.heroes[i].id === index.id) {
@@ -123,9 +125,22 @@ class CounterCombo extends Component {
                 return <HeroTile heroName={name} id={index.id} />;
               })
             : null}
+            </td>
+            <td class="border-0">
+            {this.props.heroes[tempCounter[0].id] !== undefined
+              ? tempCounter.map((index) => {
+                  var name;
+                  for (var i = 0; i < this.props.heroes.length; i++) {
+                    if (this.props.heroes[i].id === index.id) {
+                      name = this.props.heroes[i].localized_name;
+                    }
+                  }
 
-          <td class="text-center">TEST</td>
-          <td class="text-center">{this.state.winrate}</td>
+                  return <HeroTile heroName={name} id={index.id} />;
+                })
+              : null}
+          </td>
+          <td class="border-0 text-center align-middle">{this.state.winrate}</td>
         </tr>
       </tbody>
     );
