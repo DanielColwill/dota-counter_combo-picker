@@ -67,9 +67,10 @@ class CounterCombo extends Component {
         }
       }
     }
-    // for (var i = combos.length - 1; i > combos.length - 4; i--) {
-    //   console.log(combos[i]);
-    // }
+    console.log("length: " + combos.length);
+    for (var i = combos.length - 1; i > combos.length - 4; i--) {
+      console.log(combos[i]);
+    }
     combos.splice(0, combos.length - 3);
     return combos;
   }
@@ -98,7 +99,8 @@ class CounterCombo extends Component {
     console.log(temp);
     console.log(this.props.heroes);
     //console.log(this.props.heroes[temp[0].id].localized_name);
-    console.log(this.props.heroes[temp[0].id]);
+    //console.log(this.props.heroes[temp[0].id]);
+    //console.log(temp[temp.length - 1]);
     //this.test();
     return (
       <tbody class="w-100 d-md-table ">
@@ -108,12 +110,19 @@ class CounterCombo extends Component {
           <th class="text-center">Winrate</th>
         </tr>
         <tr>
-            {this.props.heroes[temp[0].id] !== undefined ? (
-              <HeroTile
-                heroName={this.props.heroes[temp[0].id].localized_name}
-                id={temp[temp.length - 1].id}
-              />
-            ) : null}
+
+          {this.props.heroes[temp[0].id] !== undefined
+            ? temp.map((index) => {
+              console.log(index);
+                return (
+                  <HeroTile
+                    heroName={this.props.heroes[index.id].localized_name}
+                    id={index.id}
+                  />
+                );
+              })
+            : null}
+
           <td class="text-center">TEST</td>
           <td class="text-center">{this.state.winrate}</td>
         </tr>
