@@ -63,6 +63,7 @@ class CounterCombo extends Component {
         var temp =
           this.state.matchups[i].wins / this.state.matchups[i].games_played;
         if (temp > combos[combos.length - 1].winrate) {
+          console.log(this.state.matchups[i]);
           combos.push({ id: this.state.matchups[i].hero_id, winrate: temp });
         }
       }
@@ -110,16 +111,16 @@ class CounterCombo extends Component {
           <th class="text-center">Winrate</th>
         </tr>
         <tr>
-
           {this.props.heroes[temp[0].id] !== undefined
             ? temp.map((index) => {
-              console.log(index);
-                return (
-                  <HeroTile
-                    heroName={this.props.heroes[index.id].localized_name}
-                    id={index.id}
-                  />
-                );
+                var name;
+                for (var i = 0; i < this.props.heroes.length; i++) {
+                  if (this.props.heroes[i].id === index.id) {
+                    name = this.props.heroes[i].localized_name;
+                  }
+                }
+
+                return <HeroTile heroName={name} id={index.id} />;
               })
             : null}
 
