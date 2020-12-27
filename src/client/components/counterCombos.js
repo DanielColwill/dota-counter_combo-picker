@@ -81,7 +81,7 @@ class CounterCombo extends Component {
       if (this.state.matchups[i].games_played > 50) {
         var temp =
           this.state.matchups[i].wins / this.state.matchups[i].games_played;
-        console.log(temp);
+
         if (temp < counters[0].winrate) {
           counters.unshift({
             id: this.state.matchups[i].hero_id,
@@ -91,11 +91,6 @@ class CounterCombo extends Component {
       }
     }
 
-    console.log("length: " + counters.length);
-    for (var i = 0; i > counters.length; i++) {
-      console.log(counters[i]);
-    }
-
     counters.splice(3, counters.length);
     return counters;
   }
@@ -103,7 +98,6 @@ class CounterCombo extends Component {
   render() {
     var tempCombo = this.getCombos();
     var tempCounter = this.getCounters();
-    console.log(tempCounter);
     return (
       <tbody class="w-100 d-md-table ">
         <tr>
@@ -113,20 +107,19 @@ class CounterCombo extends Component {
         </tr>
         <tr>
           <td class="border-0">
-          {this.props.heroes[tempCombo[0].id] !== undefined
-            ? tempCombo.map((index) => {
-                var name;
-                for (var i = 0; i < this.props.heroes.length; i++) {
-                  if (this.props.heroes[i].id === index.id) {
-                    name = this.props.heroes[i].localized_name;
-                  }
+            {tempCombo.map((index) => {
+              var name;
+              for (var i = 0; i < this.props.heroes.length; i++) {
+                if (this.props.heroes[i].id === index.id) {
+                  name = this.props.heroes[i].localized_name;
                 }
-
+              }
+              if (name !== undefined) {
                 return <HeroTile heroName={name} id={index.id} />;
-              })
-            : null}
-            </td>
-            <td class="border-0">
+              }
+            })}
+          </td>
+          <td class="border-0">
             {this.props.heroes[tempCounter[0].id] !== undefined
               ? tempCounter.map((index) => {
                   var name;
@@ -140,7 +133,9 @@ class CounterCombo extends Component {
                 })
               : null}
           </td>
-          <td class="border-0 text-center align-middle">{this.state.winrate}</td>
+          <td class="border-0 text-center align-middle">
+            {this.state.winrate}
+          </td>
         </tr>
       </tbody>
     );
