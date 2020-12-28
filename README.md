@@ -1,4 +1,4 @@
-# Dota App 
+# Dota Combo/Counter picker 
 
 - React Frontend
 - Express Backend
