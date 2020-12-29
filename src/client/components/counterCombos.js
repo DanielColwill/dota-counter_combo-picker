@@ -78,10 +78,10 @@ class CounterCombo extends Component {
       { id: "", winrate: 1 },
     ];
     for (var i = 0; i < this.state.matchups.length; i++) {
-      if (this.state.matchups[i].games_played > 50) {
+      console.log(this.state.matchups[i]);
+      if (this.state.matchups[i].games_played > 10) {
         var temp =
           this.state.matchups[i].wins / this.state.matchups[i].games_played;
-
         if (temp < counters[0].winrate) {
           counters.unshift({
             id: this.state.matchups[i].hero_id,
@@ -123,8 +123,10 @@ class CounterCombo extends Component {
             {this.props.heroes[tempCounter[0].id] !== undefined
               ? tempCounter.map((index) => {
                   var name;
+
                   for (var i = 0; i < this.props.heroes.length; i++) {
                     if (this.props.heroes[i].id === index.id) {
+                      console.log(this.props.heroes[i]);
                       name = this.props.heroes[i].localized_name;
                     }
                   }
