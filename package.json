@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start-js": "react-scripts start",
-    "heroku-postbuild": "npm run install-stuff && npm run build",
+    "heroku-postbuild": "cd src/client && npm install && npm run build",
     "install-stuff": "npm install",
     "backend-start": "node src/api/index.js",
     "start": "concurrently \"npm-run-all -p backend-start start-js\"",
