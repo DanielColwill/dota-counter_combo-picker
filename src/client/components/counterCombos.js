@@ -54,19 +54,20 @@ class CounterCombo extends Component {
 
   getCombos() {
     var combos = [
-      { id: "", winrate: 0 },
-      { id: "", winrate: 0 },
-      { id: "", winrate: 0 },
+      { id: "", winrate: 0.5 },
     ];
     for (var i = 0; i < this.state.matchups.length; i++) {
-      if (this.state.matchups[i].games_played > 50) {
+      if (this.state.matchups[i].games_played > 25) {
         var temp =
           this.state.matchups[i].wins / this.state.matchups[i].games_played;
-        if (temp > combos[combos.length - 1].winrate) {
+        if (temp > combos[0].winrate) {
+          // console.log( "id: " + this.state.matchups[i].hero_id + " winrate: " + temp );
           combos.push({ id: this.state.matchups[i].hero_id, winrate: temp });
         }
       }
     }
+    this.sortByKey(combos,"winrate");
+    
     combos.splice(0, combos.length - 3);
     return combos;
   }
@@ -78,7 +79,6 @@ class CounterCombo extends Component {
       { id: "", winrate: 1 },
     ];
     for (var i = 0; i < this.state.matchups.length; i++) {
-      console.log(this.state.matchups[i]);
       if (this.state.matchups[i].games_played > 10) {
         var temp =
           this.state.matchups[i].wins / this.state.matchups[i].games_played;
@@ -87,11 +87,11 @@ class CounterCombo extends Component {
             id: this.state.matchups[i].hero_id,
             winrate: temp,
           });
+          counters.pop();
         }
       }
     }
 
-    counters.splice(3, counters.length);
     return counters;
   }
 
@@ -126,7 +126,6 @@ class CounterCombo extends Component {
 
                   for (var i = 0; i < this.props.heroes.length; i++) {
                     if (this.props.heroes[i].id === index.id) {
-                      console.log(this.props.heroes[i]);
                       name = this.props.heroes[i].localized_name;
                     }
                   }
