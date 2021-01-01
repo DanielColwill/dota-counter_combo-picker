@@ -22,16 +22,12 @@
     "react-scripts": "4.0.1"
   },
   "scripts": {
-    "start-js": "react-scripts start",
-    "heroku-postbuild": "cd src/client && npm install && npm run build",
-    "install-stuff": "npm install",
-    "backend-start": "node src/api/index.js",
-    "start": "concurrently \"npm-run-all -p backend-start start-js\"",
-    "stop": "npx kill-port 3000 4000",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prod": "node src/api/index.js & npm start"
+    "client-install": "npm install --prefix client",
+    "start": "node src/api/server.js",
+    "server": "nodemon src/api/server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client        && npm run build --prefix client"
   },
   "eslintConfig": {
     "extends": [
