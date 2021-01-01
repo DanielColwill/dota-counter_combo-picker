@@ -117,6 +117,9 @@ class CounterCombo extends Component {
               if (name !== undefined) {
                 return <HeroTile heroName={name} id={index.id} />;
               }
+              else{
+                return null;
+              }
             })}
           </td>
           <td class="border-0">

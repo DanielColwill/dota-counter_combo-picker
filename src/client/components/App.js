@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeroTile from "./HeroTile";
-import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { Navbar, Nav, Form, FormControl } from "react-bootstrap";
 
 const axios = require("axios");
 
@@ -50,11 +50,15 @@ class App extends Component {
   renderHeroes() {
     var list = [];
     if (this.state.search.length === 0) {
-      {
-        return this.state.heroes.map((hero, id) => {
-          return <HeroTile heroes={this.state.heroes} heroName={hero.localized_name} id={hero.id} />;
-        });
-      }
+      return this.state.heroes.map((hero, id) => {
+        return (
+          <HeroTile
+            heroes={this.state.heroes}
+            heroName={hero.localized_name}
+            id={hero.id}
+          />
+        );
+      });
     } else if (this.state.search.length > 0) {
       for (var i = 0; i < this.state.heroes.length; i++) {
         if (
@@ -65,18 +69,23 @@ class App extends Component {
           list.push(this.state.heroes[i]);
         }
       }
-      {
-        return list.map((hero, id) => {
-          return <HeroTile heroes={this.state.heroes} heroName={hero.localized_name} id={hero.id} />;
-        });
-      }
+
+      return list.map((hero, id) => {
+        return (
+          <HeroTile
+            heroes={this.state.heroes}
+            heroName={hero.localized_name}
+            id={hero.id}
+          />
+        );
+      });
     }
   }
 
-  updateSearch (event){
+  updateSearch(event) {
     this.setState({
-      search:event.target.value
-    })
+      search: event.target.value,
+    });
   }
 
   render() {
@@ -125,7 +134,6 @@ class App extends Component {
                 </thead>
 
                 {this.state.heroes.length > 0 ? this.renderHeroes() : null}
-
               </table>
             </div>
             <div class="col-sm-1"></div>

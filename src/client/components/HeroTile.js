@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CounterCombo from "./counterCombos";
-const axios = require("axios");
 
 class HeroTile extends Component {
   constructor(props) {
