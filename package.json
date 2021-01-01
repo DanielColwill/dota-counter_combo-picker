@@ -11,6 +11,7 @@
     "babel-cli": "^6.26.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "nodemon": "^2.0.6",
     "react": "^17.0.1",
@@ -22,6 +23,8 @@
   },
   "scripts": {
     "start-js": "react-scripts start",
+    "heroku-postbuild": "npm run install-stuff && npm run build",
+    "install-stuff": "npm install",
     "backend-start": "node src/api/index.js",
     "start": "concurrently \"npm-run-all -p backend-start start-js\"",
     "stop": "npx kill-port 3000 4000",

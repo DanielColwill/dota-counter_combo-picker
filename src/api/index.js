@@ -4,6 +4,8 @@ const path = require("path");
 const app = express();
 const publicPath = path.join(__dirname, '');
 
+require('dotenv').config();
+
 var testRouter = require("./routes/test");
 var heroesRouter = require("./routes/heroes");
 var winrateRouter = require("./routes/winrate");
@@ -24,6 +26,6 @@ app.use("/",heroesRouter);
 app.use("/",winrateRouter);
 app.use("/",matchupRouter);
 
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log('Server is up!');
 });
