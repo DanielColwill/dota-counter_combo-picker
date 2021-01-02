@@ -22,7 +22,7 @@ class CounterCombo extends Component {
 
   getMatchups() {
     axios
-      .get("http://localhost:4000/matchups/" + this.state.id)
+      .get("https://dota-app-combo-counter.herokuapp.com/matchups/" + this.state.id)
       .then((result) => {
         this.setState({
           matchups: result.data,
@@ -31,7 +31,7 @@ class CounterCombo extends Component {
   }
   getWinrate() {
     axios
-      .get("http://localhost:4000/winrates/" + this.state.id)
+      .get("https://dota-app-combo-counter.herokuapp.com/winrates/" + this.state.id)
       .then((result) => {
         this.setState({
           winrate: result.data,
