@@ -4,12 +4,7 @@ import { Navbar, Nav, Form, FormControl } from "react-bootstrap";
 
 const axios = require("axios");
 const httpUrl = "";
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV === "production") {
-  httpUrl = "https://dota-app-combo-counter.herokuapp.com";
-} else {
-  httpUrl = "http://localhost:4000";
-}
+
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +22,7 @@ class App extends Component {
   }
 
   getHeroes() {
-    axios.get(httpUrl+"/heroes").then((result) => {
+    axios.get("https://dota-app-combo-counter.herokuapp.com/heroes").then((result) => {
       this.setState({
         heroes: result.data,
       });
