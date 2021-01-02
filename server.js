@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const PORT = process.env.PORT || 4000;
 /* const whitelist = [
   "http://localhost:3000",
   "http://localhost:4000",
@@ -24,21 +25,23 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); */
 
-var allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+var allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
+  );
 
   // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
+  if ("OPTIONS" == req.method) {
     res.send(200);
-  }
-  else {
+  } else {
     next();
   }
 };
 app.use(allowCrossDomain);
-
+app.use(cors());
 
 require("dotenv").config();
 
@@ -57,9 +60,8 @@ app.use("/", heroesRouter);
 app.use("/", winrateRouter);
 app.use("/", matchupRouter);
 
-
 app.listen(process.env.PORT || 4000, () => {
-  console.log("Server is up!");
+  console.log(`Listening on Port ${PORT}`);
 });
 
 if (process.env.NODE_ENV === "production") {
