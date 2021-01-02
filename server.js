@@ -23,6 +23,9 @@ app.use("/", matchupRouter);
 const whitelist = [
   "http://localhost:3000",
   "http://localhost:4000",
+  "http://localhost:4000/heroes",
+  "http://localhost:4000/winrates",
+  "http://localhost:4000/matchups",
   "https://dota-app-combo-counter.herokuapp.com",
 ];
 const corsOptions = {
