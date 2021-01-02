@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-const whitelist = [
+/* const whitelist = [
   "http://localhost:3000",
   "http://localhost:4000",
   "http://localhost:4000/heroes",
@@ -22,7 +22,7 @@ const corsOptions = {
     }
   },
 };
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); */
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -38,6 +38,14 @@ var allowCrossDomain = function(req, res, next) {
   }
 };
 app.use(allowCrossDomain);
+
+const corsOptions = {
+  origin: 'https://dota-app-combo-counter.herokuapp.com/',
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+app.options('*', cors());
+app.use('/', routes);
 
 
 require("dotenv").config();
