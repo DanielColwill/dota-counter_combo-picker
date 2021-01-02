@@ -37,9 +37,7 @@ var allowCrossDomain = function(req, res, next) {
     next();
   }
 };
-app.config(function() {
-  app.use(allowCrossDomain);
-});
+app.use(allowCrossDomain);
 
 
 require("dotenv").config();
