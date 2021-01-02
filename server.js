@@ -39,14 +39,6 @@ var allowCrossDomain = function(req, res, next) {
 };
 app.use(allowCrossDomain);
 
-const corsOptions = {
-  origin: 'https://dota-app-combo-counter.herokuapp.com/',
-  optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
-app.options('*', cors());
-app.use('/', routes);
-
 
 require("dotenv").config();
 
