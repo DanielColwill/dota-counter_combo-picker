@@ -2,24 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-
-require("dotenv").config();
-
-var testRouter = require("./routes/test");
-var heroesRouter = require("./routes/heroes");
-var winrateRouter = require("./routes/winrate");
-var matchupRouter = require("./routes/matchups");
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use(express.static(__dirname + "/public"));
-
-app.use("/test", testRouter);
-app.use("/", heroesRouter);
-app.use("/", winrateRouter);
-app.use("/", matchupRouter);
-
 const whitelist = [
   "http://localhost:3000",
   "http://localhost:4000",
@@ -41,6 +23,42 @@ const corsOptions = {
   },
 };
 app.use(cors(corsOptions));
+
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+  // intercept OPTIONS method
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  }
+  else {
+    next();
+  }
+};
+app.config(function() {
+  app.use(allowCrossDomain);
+});
+
+
+require("dotenv").config();
+
+var testRouter = require("./routes/test");
+var heroesRouter = require("./routes/heroes");
+var winrateRouter = require("./routes/winrate");
+var matchupRouter = require("./routes/matchups");
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static(__dirname + "/public"));
+
+app.use("/test", testRouter);
+app.use("/", heroesRouter);
+app.use("/", winrateRouter);
+app.use("/", matchupRouter);
+
 
 app.listen(process.env.PORT || 4000, () => {
   console.log("Server is up!");
