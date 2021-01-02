@@ -3,7 +3,7 @@ import HeroTile from "./HeroTile";
 import { Navbar, Nav, Form, FormControl } from "react-bootstrap";
 
 const axios = require("axios");
-const httpUrl;
+const httpUrl = "";
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
   httpUrl = "https://dota-app-combo-counter.herokuapp.com";
