@@ -118,7 +118,7 @@ class App extends Component {
         </Navbar>
         <div class="pt-5 container h-100">
           <div class="row h-25 align-items-center">
-            <div class="col-sm-1"></div>
+            <div class="col-xs-1"></div>
             {/* content */}
             <div class="table-responsive">
               <table
@@ -136,7 +136,7 @@ class App extends Component {
                 {this.state.heroes.length > 0 ? this.renderHeroes() : null}
               </table>
             </div>
-            <div class="col-sm-1"></div>
+            <div class="col-xs-1"></div>
           </div>
         </div>
       </div>
