@@ -1,22 +1,21 @@
 import React, { Component } from "react";
+import { Spinner } from "react-bootstrap";
 import CounterCombo from "./counterCombos";
 
 class HeroTile extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.loadingBuffer = this.loadingBuffer.bind(this);
     this.state = {
       id: this.props.id,
       heroName: this.props.heroName,
       winrate: 0,
       heroes: this.props.heroes,
       open: false,
+      loading: false,
     };
   }
-
-  /*   componentDidMount() {
-    this.getWinrate();
-  } */
 
   getHeroImg(name) {
     var temp = name.toLowerCase();
@@ -66,21 +65,36 @@ class HeroTile extends Component {
         return url + temp + extension;
     }
   }
-  toggle() {
-    if (this.state.open === true) {
+
+  loadingBuffer() {
+    if (this.state.loading === false) {
       this.setState({
-        open: false,
+        loading: true,
       });
     } else {
       this.setState({
-        open: true,
+        loading: false,
       });
+    }
+  }
+
+  toggle() {
+    if (this.state.loading === false) {
+      if (this.state.open === true) {
+        this.setState({
+          open: false,
+        });
+      } else {
+        this.setState({
+          open: true,
+        });
+      }
     }
   }
 
   render() {
     return (
-      <tbody onClick={this.toggle}>
+      <tbody onClick={() => this.loadingBuffer()}>
         <tr>
           <td>
             <img
@@ -90,9 +104,19 @@ class HeroTile extends Component {
             ></img>
             {this.props.heroName}
           </td>
+          <td id="loadingState" class="align-middle">
+            {this.state.loading ? (
+              <Spinner animation="border" role="status"></Spinner>
+            ) : null}
+          </td>
         </tr>
         {this.state.open ? (
-          <CounterCombo heroes={this.props.heroes} heroName={this.props.heroName} id={this.props.id} />
+          <CounterCombo
+            heroes={this.props.heroes}
+            heroName={this.props.heroName}
+            id={this.props.id}
+            loading={() => this.loadingBuffer()}
+          />
         ) : null}
       </tbody>
     );

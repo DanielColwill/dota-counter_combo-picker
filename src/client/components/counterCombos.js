@@ -17,6 +17,7 @@ class CounterCombo extends Component {
       goodCounter: 0,
       betterCounter: 0,
       bestCounter: 0,
+      loading: this.props.loading,
     };
   }
 
@@ -53,9 +54,7 @@ class CounterCombo extends Component {
   }
 
   getCombos() {
-    var combos = [
-      { id: "", winrate: 0.5 },
-    ];
+    var combos = [{ id: "", winrate: 0.5 }];
     for (var i = 0; i < this.state.matchups.length; i++) {
       if (this.state.matchups[i].games_played > 25) {
         var temp =
@@ -66,8 +65,8 @@ class CounterCombo extends Component {
         }
       }
     }
-    this.sortByKey(combos,"winrate");
-    
+    this.sortByKey(combos, "winrate");
+
     combos.splice(0, combos.length - 3);
     return combos;
   }
@@ -91,13 +90,15 @@ class CounterCombo extends Component {
         }
       }
     }
-
     return counters;
   }
 
   render() {
     var tempCombo = this.getCombos();
     var tempCounter = this.getCounters();
+    if (tempCounter.length !== 0 && tempCombo.length !== 0) {
+      this.props.loading();
+    }
     return (
       <tbody class="w-100 d-md-table ">
         <tr>
@@ -116,8 +117,7 @@ class CounterCombo extends Component {
               }
               if (name !== undefined) {
                 return <HeroTile heroName={name} id={index.id} />;
-              }
-              else{
+              } else {
                 return null;
               }
             })}
