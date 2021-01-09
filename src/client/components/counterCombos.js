@@ -17,7 +17,6 @@ class CounterCombo extends Component {
       goodCounter: 0,
       betterCounter: 0,
       bestCounter: 0,
-      loadFinished: this.props.loadFinished,
     };
   }
 
@@ -90,15 +89,16 @@ class CounterCombo extends Component {
         }
       }
     }
-    
+
     return counters;
   }
+
 
   render() {
     var tempCombo = this.getCombos();
     var tempCounter = this.getCounters();
     if (tempCounter.length !== 0 && tempCombo.length !== 0) {
-      console.log("done");
+      this.props.handler();
     }
     return (
       <tbody class="w-100 d-md-table ">

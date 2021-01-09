@@ -6,7 +6,7 @@ class HeroTile extends Component {
   constructor(props) {
     super(props);
     this.openToggle = this.openToggle.bind(this);
-    this.loadingBuffer = this.loadingBuffer.bind(this);
+    this.handler = this.handler.bind(this);
     this.state = {
       id: this.props.id,
       heroName: this.props.heroName,
@@ -14,7 +14,7 @@ class HeroTile extends Component {
       heroes: this.props.heroes,
       open: false,
       loading: false,
-      loadFinished:false
+      loadFinished: false,
     };
   }
 
@@ -67,28 +67,14 @@ class HeroTile extends Component {
     }
   }
 
-  loadingBuffer() {
-    if (this.state.loadFinished === false) {
-      this.setState({
-        loadFinished: true,
-      });
-    } else {
-      this.setState({
-        loadFinished: false,
-      });
-    }
+  handler() {
+    console.log("running " + this.state.loading);
+    this.setState({
+      loading: true,
+    });
   }
 
   openToggle() {
-    if (this.state.loading === false) {
-      this.setState({
-        loading: true,
-      });
-    } else {
-      this.setState({
-        loading: false,
-      });
-    }
     if (this.state.open === true) {
       this.setState({
         open: false,
@@ -123,7 +109,7 @@ class HeroTile extends Component {
             heroes={this.props.heroes}
             heroName={this.props.heroName}
             id={this.props.id}
-            // loadFinished={this.loadingBuffer()}
+            handler={() => this.handler}
           />
         ) : null}
       </tbody>
