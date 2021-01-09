@@ -44,12 +44,10 @@ class CounterCombo extends Component {
     this.getWinrate();
   }
 
-  componentDidUpdate() {
-    // if (this.state.matchups.length > 0) {
-    //   console.log("done");
-    // this.props.handler();
-    // }
+  componentDidUpdate(){
+    this.props.handler();
   }
+
 
   sortByKey(array, key) {
     return array.sort(function (a, b) {

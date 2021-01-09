@@ -14,6 +14,7 @@ class HeroTile extends Component {
       heroes: this.props.heroes,
       open: false,
       loading: false,
+      temp: "",
     };
   }
 
@@ -67,22 +68,29 @@ class HeroTile extends Component {
   }
 
   handler() {
-    console.log("running: " + this.state.loading);
-    this.setState((prevState) => ({
-      loading: !prevState.loading,
-    }));
-    this.getHero();
+    if (this.state.loading === false) {
+      this.setState({
+        loading: true,
+      });
+      this.getHero();
+    } else {
+      this.setState((prevState) => ({
+        loading: false,
+      }));
+    }
   }
 
   getHero() {
-    return (
-      <CounterCombo
-        heroes={this.props.heroes}
-        heroName={this.props.heroName}
-        id={this.props.id}
-        handler={() => this.handler()}
-      />
-    );
+    this.setState({
+      temp: (
+        <CounterCombo
+          heroes={this.props.heroes}
+          heroName={this.props.heroName}
+          id={this.props.id}
+          handler={() => this.handler()}
+        />
+      ),
+    });
   }
 
   openToggle() {
@@ -93,7 +101,7 @@ class HeroTile extends Component {
 
   render() {
     return (
-      <tbody onClick={() => this.openToggle()}>
+      <tbody onClick={() => this.handler()}>
         <tr>
           <td>
             <img
@@ -109,14 +117,7 @@ class HeroTile extends Component {
             ) : null}
           </td>
         </tr>
-        {this.state.open ? (
-          <CounterCombo
-            heroes={this.props.heroes}
-            heroName={this.props.heroName}
-            id={this.props.id}
-            handler={() => this.handler()}
-          />
-        ) : null}
+        {this.state.temp !== "" ? this.state.temp : null}
       </tbody>
     );
   }
