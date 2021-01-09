@@ -80,6 +80,7 @@ class HeroTile extends Component {
     }
   }
 
+
   getHero() {
     this.setState({
       temp: (

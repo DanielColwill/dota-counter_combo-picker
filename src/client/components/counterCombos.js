@@ -8,7 +8,7 @@ class CounterCombo extends Component {
     this.state = {
       id: this.props.id,
       heroName: this.props.heroName,
-      winrate: 0,
+      winrate: "",
       heroes: this.props.heroes,
       matchups: [],
       goodCombo: 0,
@@ -44,10 +44,9 @@ class CounterCombo extends Component {
     this.getWinrate();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.props.handler();
   }
-
 
   sortByKey(array, key) {
     return array.sort(function (a, b) {
@@ -105,13 +104,18 @@ class CounterCombo extends Component {
     //   console.log("done");
     //   this.props.handler();
     // }
+    const test = this.state.matchups.length;
+
+    console.log(test);
     return (
       <tbody class="w-100 d-md-table ">
-        <tr>
-          <th class="text-center">Good Against</th>
-          <th class="text-center">Countered By</th>
-          <th class="text-center">Winrate</th>
-        </tr>
+        {test > 0 ? (
+          <tr>
+            <th class="text-center">Good Against</th>
+            <th class="text-center">Countered By</th>
+            <th class="text-center">Winrate</th>
+          </tr>
+        ) : null}
         <tr>
           <td class="border-0">
             {tempCombo.map((index) => {
