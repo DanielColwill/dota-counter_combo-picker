@@ -14,7 +14,6 @@ class HeroTile extends Component {
       heroes: this.props.heroes,
       open: false,
       loading: false,
-      loadFinished: false,
     };
   }
 
@@ -68,22 +67,28 @@ class HeroTile extends Component {
   }
 
   handler() {
-    console.log("running " + this.state.loading);
-    this.setState({
-      loading: true,
-    });
+    console.log("running: " + this.state.loading);
+    this.setState((prevState) => ({
+      loading: !prevState.loading,
+    }));
+    this.getHero();
+  }
+
+  getHero() {
+    return (
+      <CounterCombo
+        heroes={this.props.heroes}
+        heroName={this.props.heroName}
+        id={this.props.id}
+        handler={() => this.handler()}
+      />
+    );
   }
 
   openToggle() {
-    if (this.state.open === true) {
-      this.setState({
-        open: false,
-      });
-    } else {
-      this.setState({
-        open: true,
-      });
-    }
+    this.setState((prevState) => ({
+      open: !prevState.open,
+    }));
   }
 
   render() {
@@ -99,7 +104,7 @@ class HeroTile extends Component {
             {this.props.heroName}
           </td>
           <td id="loadingState" class="align-middle">
-            {this.state.loading && this.state.loadFinished ? (
+            {this.state.loading ? (
               <Spinner animation="border" role="status"></Spinner>
             ) : null}
           </td>
@@ -109,7 +114,7 @@ class HeroTile extends Component {
             heroes={this.props.heroes}
             heroName={this.props.heroName}
             id={this.props.id}
-            handler={() => this.handler}
+            handler={() => this.handler()}
           />
         ) : null}
       </tbody>

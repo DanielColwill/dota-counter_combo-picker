@@ -44,6 +44,13 @@ class CounterCombo extends Component {
     this.getWinrate();
   }
 
+  componentDidUpdate() {
+    // if (this.state.matchups.length > 0) {
+    //   console.log("done");
+    // this.props.handler();
+    // }
+  }
+
   sortByKey(array, key) {
     return array.sort(function (a, b) {
       var x = a[key];
@@ -93,13 +100,13 @@ class CounterCombo extends Component {
     return counters;
   }
 
-
   render() {
     var tempCombo = this.getCombos();
     var tempCounter = this.getCounters();
-    if (tempCounter.length !== 0 && tempCombo.length !== 0) {
-      this.props.handler();
-    }
+    // if (tempCounter.length !== 0 && tempCombo.length !== 0) {
+    //   console.log("done");
+    //   this.props.handler();
+    // }
     return (
       <tbody class="w-100 d-md-table ">
         <tr>
