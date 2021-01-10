@@ -100,58 +100,55 @@ class CounterCombo extends Component {
   render() {
     var tempCombo = this.getCombos();
     var tempCounter = this.getCounters();
-    // if (tempCounter.length !== 0 && tempCombo.length !== 0) {
-    //   console.log("done");
-    //   this.props.handler();
-    // }
     const test = this.state.matchups.length;
-
-    console.log(test);
     return (
-      <tbody class="w-100 d-md-table ">
+      <React.Fragment>
         {test > 0 ? (
-          <tr>
-            <th class="text-center">Good Against</th>
-            <th class="text-center">Countered By</th>
-            <th class="text-center">Winrate</th>
-          </tr>
-        ) : null}
-        <tr>
-          <td class="border-0">
-            {tempCombo.map((index) => {
-              var name;
-              for (var i = 0; i < this.props.heroes.length; i++) {
-                if (this.props.heroes[i].id === index.id) {
-                  name = this.props.heroes[i].localized_name;
-                }
-              }
-              if (name !== undefined) {
-                return <HeroTile heroName={name} id={index.id} />;
-              } else {
-                return null;
-              }
-            })}
-          </td>
-          <td class="border-0">
-            {this.props.heroes[tempCounter[0].id] !== undefined
-              ? tempCounter.map((index) => {
-                  var name;
+          <tbody class="w-100 d-md-table ">
+            <tr>
+              <th class="text-center">Good Against</th>
+              <th class="text-center">Countered By</th>
+              <th class="text-center">Winrate</th>
+            </tr>
 
+            <tr>
+              <td class="border-0">
+                {tempCombo.map((index) => {
+                  var name;
                   for (var i = 0; i < this.props.heroes.length; i++) {
                     if (this.props.heroes[i].id === index.id) {
                       name = this.props.heroes[i].localized_name;
                     }
                   }
+                  if (name !== undefined) {
+                    return <HeroTile heroName={name} id={index.id} />;
+                  } else {
+                    return null;
+                  }
+                })}
+              </td>
+              <td class="border-0">
+                {this.props.heroes[tempCounter[0].id] !== undefined
+                  ? tempCounter.map((index) => {
+                      var name;
 
-                  return <HeroTile heroName={name} id={index.id} />;
-                })
-              : null}
-          </td>
-          <td class="border-0 text-center align-middle">
-            {this.state.winrate}
-          </td>
-        </tr>
-      </tbody>
+                      for (var i = 0; i < this.props.heroes.length; i++) {
+                        if (this.props.heroes[i].id === index.id) {
+                          name = this.props.heroes[i].localized_name;
+                        }
+                      }
+
+                      return <HeroTile heroName={name} id={index.id} />;
+                    })
+                  : null}
+              </td>
+              <td class="border-0 text-center align-middle">
+                {this.state.winrate}
+              </td>
+            </tr>
+          </tbody>
+        ) : null}
+      </React.Fragment>
     );
   }
 }

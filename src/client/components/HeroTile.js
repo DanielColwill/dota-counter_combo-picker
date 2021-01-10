@@ -68,7 +68,7 @@ class HeroTile extends Component {
   }
 
   handler() {
-    if (this.state.loading === false) {
+    if (this.state.loading === false && this.state.open === false) {
       this.setState({
         loading: true,
       });
@@ -102,7 +102,7 @@ class HeroTile extends Component {
 
   render() {
     return (
-      <tbody onClick={() => this.handler()}>
+      <tbody onClick={() => {this.handler();this.openToggle(); }}>
         <tr>
           <td>
             <img
@@ -118,7 +118,7 @@ class HeroTile extends Component {
             ) : null}
           </td>
         </tr>
-        {this.state.temp !== "" ? this.state.temp : null}
+        {this.state.open ? this.state.temp : null}
       </tbody>
     );
   }
