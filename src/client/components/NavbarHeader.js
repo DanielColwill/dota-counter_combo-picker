@@ -4,10 +4,6 @@ import { Navbar, Nav, Form, FormControl } from "react-bootstrap";
 class NavbarHeader extends Component {
   constructor(){
     super();
-    this.updateSearch = this.updateSearch.bind(this);
-    this.state = {
-      search:''
-    }
   }
   
   updateSearch (event){
@@ -32,7 +28,7 @@ class NavbarHeader extends Component {
           <Nav.Link href="/">Home</Nav.Link>
         </Nav>
         <Form inline>
-          <FormControl onChange={this.updateSearch} value={this.state.search}  is="searchBar" id="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
+          <FormControl onChange={this.props.updateSearch} value={this.props.search}  is="searchBar" id="searchBar" type="text" placeholder="Search" className="mr-sm-2" />
         </Form>
       </Navbar>
     );

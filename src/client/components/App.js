@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeroTile from "./HeroTile";
-import { Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import NavbarHeader from "./NavbarHeader";
 
 const axios = require("axios");
 
@@ -30,7 +30,6 @@ class App extends Component {
   componentDidMount() {
     this.getHeroes();
     this.sortAlpha();
-    //this.addSearchListener();
   }
 
   sortByKey(array, key) {
@@ -89,56 +88,38 @@ class App extends Component {
   }
 
   render() {
+    const layout = (
+      <div class="pt-5 container h-100">
+        <div class="row h-25 align-items-center">
+          <div class="col-xs-1"></div>
+          {/* content */}
+          <div class="table-responsive">
+            <table
+              class="table table-hover table-dark w-100 d-block d-md-table"
+              id="heroTable"
+            >
+              <thead>
+                <tr>
+                  <th class="pl-4" onClick={this.sortAlpha} scope="col">
+                    Heroes
+                  </th>
+                </tr>
+              </thead>
+              {this.state.heroes.length > 0 ? this.renderHeroes() : null}
+            </table>
+          </div>
+          <div class="col-xs-1"></div>
+        </div>
+      </div>
+    );
+
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/">
-            Dota App
-            <img
-              src="https://1000logos.net/wp-content/uploads/2019/03/Dota-2-Logo.png"
-              align="middle"
-              height="30"
-              alt=""
-            ></img>
-          </Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl
-              onChange={this.updateSearch}
-              value={this.state.search}
-              is="searchBar"
-              id="searchBar"
-              type="text"
-              placeholder="Search"
-              className="mr-sm-2"
-            />
-          </Form>
-        </Navbar>
-        <div class="pt-5 container h-100">
-          <div class="row h-25 align-items-center">
-            <div class="col-xs-1"></div>
-            {/* content */}
-            <div class="table-responsive">
-              <table
-                class="table table-hover table-dark w-100 d-block d-md-table"
-                id="heroTable"
-              >
-                <thead>
-                  <tr>
-                    <th class="pl-4" onClick={this.sortAlpha} scope="col">
-                      Heroes
-                    </th>
-                  </tr>
-                </thead>
-
-                {this.state.heroes.length > 0 ? this.renderHeroes() : null}
-              </table>
-            </div>
-            <div class="col-xs-1"></div>
-          </div>
-        </div>
+        <NavbarHeader
+          search={this.state.search}
+          updateSearch={this.updateSearch}
+        />
+        {layout}
       </div>
     );
   }
