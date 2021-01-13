@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import heroData from "../../data/heroes.json";
 import HeroTile from "./HeroTile";
 import NavbarHeader from "./NavbarHeader";
-
-const axios = require("axios");
+// const axios = require("axios");
 
 class App extends Component {
   constructor(props) {
@@ -20,16 +20,21 @@ class App extends Component {
   }
 
   getHeroes() {
-    axios.get("http://localhost:4000/heroes").then((result) => {
-      this.setState({
-        heroes: result.data,
-      });
+    //using local json so don't have to request for hero data which stays relatively static
+    this.setState({
+      heroes: heroData,
     });
+
+    // axios.get("http://localhost:4000/heroes").then((result) => {
+    //   this.setState({
+    //     heroes: result.data,
+    //   });
+    // });
   }
 
   componentDidMount() {
     this.getHeroes();
-    this.sortAlpha();
+    //this.sortAlpha();
   }
 
   sortByKey(array, key) {

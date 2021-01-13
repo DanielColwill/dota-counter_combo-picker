@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl } from "react-bootstrap";
 
 class NavbarHeader extends Component {
-  constructor(){
-    super();
-  }
   
   updateSearch (event){
     this.setState({
