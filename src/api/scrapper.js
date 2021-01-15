@@ -1,16 +1,14 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
-async function scrape(url){
-  const browser = await puppeteer.launch();
+async function scrape(url) {
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url);
 
-  const [el] = await page.$x('/html/body/div[1]/div[8]/div[2]/div[3]/div[1]/div[1]/section[2]/article/div[1]/a/img');
-  const src = await el.getProperty('src');
-  const srcTxt = await src.jsonValue();
-
-  console.log(srcTxt);
-  
+  let data = await page.evaluate(() => {
+    let name = document.querySelectorAll('.container-inner, td:first-of-type').getAttribute('data-value');
+    return name;
+  });
 }
 
-scrape("https://www.dotabuff.com/");
+scrape("https://www.dotabuff.com/heroes/trends");
