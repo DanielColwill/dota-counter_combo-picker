@@ -2,38 +2,32 @@ var express = require("express");
 var router = express.Router();
 const puppeteer = require("puppeteer");
 
-router.get("/winrates/:name", function (req, res, next) {
-  // console.log(req.params.name);
-  async function scrape(url, name) {
+router.get("/winrates", function (req, res, next) {
+  async function scrape(url) {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(url);
 
-
-    let heroNames = await page.evaluate(() => {
+    let winrates = await page.evaluate(() => {
       let names = Array.from(
         document.querySelectorAll(".container-inner td:first-of-type"),
-        (element) => element.textContent
+        (element) => element.textContent.toString
       );
-      return names;
-    });
-    let winrate = "";
-    console.log(name);
-    for (var i = 0; i < heroNames.length; i++) {
-      if (heroNames[i] === name) {
-        winrate = await page.evaluate(() => {
-          let rate = document.querySelector(".container-inner td").nextSibling
-            .nextSibling.innerText;
-          return rate;
-        });
+
+      let rates = Array.from(
+        document.querySelectorAll(".container-inner td:first-of-type"),
+        (element) => element.nextSibling.nextSibling.textContent
+      );
+      let result = {};
+      for (var i = 0; i < names.length; i++) {
+        result[names[i]] = rates[i];
       }
-    }
+      return result;
+    });
 
-    console.log("current winrate: " + winrate);
-    res.send(winrate);
+    console.log(winrates);
+    res.send(winrates);
   }
-
-  scrape("https://www.dotabuff.com/heroes/trends", req.params.name);
 });
 
 module.exports = router;
