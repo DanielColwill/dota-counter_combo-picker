@@ -12,7 +12,8 @@ let cache = apicache.middleware;
 
 var testRouter = require("./routes/test");
 var heroesRouter = require("./routes/heroes");
-var winrateRouter = require("./routes/winrate");
+//Change to scrapper
+var winrateRouter = require("./routes/scrapper.js");
 var matchupRouter = require("./routes/matchups");
 
 app.use(cache("5 minutes"));
