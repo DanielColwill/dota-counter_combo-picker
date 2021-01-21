@@ -8,15 +8,10 @@ class CounterCombo extends Component {
     this.state = {
       id: this.props.id,
       heroName: this.props.heroName,
-      winrate: "",
+      winrates: this.props.winrates,
       heroes: this.props.heroes,
       matchups: [],
-      goodCombo: 0,
-      betterCombo: 0,
-      bestCombo: 0,
-      goodCounter: 0,
-      betterCounter: 0,
-      bestCounter: 0,
+      winrate: 0,
     };
   }
 
@@ -30,22 +25,25 @@ class CounterCombo extends Component {
       });
   }
   getWinrate() {
-    axios
-      .get("http://localhost:4000/winrates/" + this.state.id)
-      .then((result) => {
+    for (var i = 0; i < this.state.winrates.length; i++) {
+      if (this.state.winrates[i].name == this.state.heroName) {
         this.setState({
-          winrate: result.data,
+          winrate: this.state.winrates[i].winrate,
         });
-      });
+      }
+    }
   }
 
   componentDidMount() {
+    console.log(this.state.matchups);
     this.getMatchups();
     this.getWinrate();
   }
 
   componentDidUpdate() {
-    this.props.handler();
+    if (this.state.winrate != 0 && this.state.matchups.length >0) {
+      this.props.handler();
+    }
   }
 
   sortByKey(array, key) {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import heroData from "../../data/heroes.json";
 import HeroTile from "./HeroTile";
 import NavbarHeader from "./NavbarHeader";
-// const axios = require("axios");
+const axios = require("axios");
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class App extends Component {
       heroName: "",
       id: 0,
       search: "",
+      winrates:[]
     };
   }
 
@@ -24,18 +25,26 @@ class App extends Component {
     this.setState({
       heroes: heroData,
     });
-
+    //using external api
     // axios.get("http://localhost:4000/heroes").then((result) => {
     //   this.setState({
     //     heroes: result.data,
     //   });
     // });
   }
+  async getWinrates() {
+    await axios.get("http://localhost:4000/winrates").then((result) => {
+      this.setState({
+        winrates: result.data,
+      });
+    });
+  }
 
   componentDidMount() {
     this.getHeroes();
-    //this.sortAlpha();
+    this.getWinrates();
   }
+
 
   sortByKey(array, key) {
     return array.sort(function (a, b) {
@@ -60,6 +69,7 @@ class App extends Component {
             heroes={this.state.heroes}
             heroName={hero.localized_name}
             id={hero.id}
+            winrates={this.state.winrates}
           />
         );
       });
@@ -80,6 +90,7 @@ class App extends Component {
             heroes={this.state.heroes}
             heroName={hero.localized_name}
             id={hero.id}
+            winrates={this.state.winrates}
           />
         );
       });

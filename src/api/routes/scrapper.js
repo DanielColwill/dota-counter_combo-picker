@@ -11,23 +11,25 @@ router.get("/winrates", function (req, res, next) {
     let winrates = await page.evaluate(() => {
       let names = Array.from(
         document.querySelectorAll(".container-inner td:first-of-type"),
-        (element) => element.textContent.toString
+        (element) => element.textContent
       );
 
       let rates = Array.from(
         document.querySelectorAll(".container-inner td:first-of-type"),
         (element) => element.nextSibling.nextSibling.textContent
       );
-      let result = {};
+
+      let temp = [];
       for (var i = 0; i < names.length; i++) {
-        result[names[i]] = rates[i];
+        temp.push({ name: names[i], winrate: rates[i] });
       }
-      return result;
+      return temp;
     });
 
-    console.log(winrates);
+    // console.log(winrates);
     res.send(winrates);
   }
+  scrape("https://www.dotabuff.com/heroes/trends");
 });
 
 module.exports = router;

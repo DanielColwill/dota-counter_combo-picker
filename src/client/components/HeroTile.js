@@ -10,7 +10,7 @@ class HeroTile extends Component {
     this.state = {
       id: this.props.id,
       heroName: this.props.heroName,
-      winrate: 0,
+      winrates: this.props.winrates,
       heroes: this.props.heroes,
       open: false,
       loading: false,
@@ -74,12 +74,11 @@ class HeroTile extends Component {
       });
       this.getHero();
     } else {
-      this.setState((prevState) => ({
+      this.setState({
         loading: false,
-      }));
+      });
     }
   }
-
 
   getHero() {
     this.setState({
@@ -89,6 +88,7 @@ class HeroTile extends Component {
           heroName={this.props.heroName}
           id={this.props.id}
           handler={() => this.handler()}
+          winrates={this.props.winrates}
         />
       ),
     });
@@ -102,13 +102,19 @@ class HeroTile extends Component {
 
   render() {
     return (
-      <tbody onClick={() => {this.handler();this.openToggle(); }}>
+      <tbody
+        onClick={() => {
+          this.handler();
+          this.openToggle();
+        }}
+      >
         <tr>
           <td>
             <img
               class="col-md-2"
               src={this.getHeroImg(this.props.heroName)}
               alt=""
+              loading="lazy"
             ></img>
             {this.props.heroName}
           </td>

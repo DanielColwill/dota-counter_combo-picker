@@ -18,14 +18,13 @@ async function scrape(url) {
       (element) => element.nextSibling.nextSibling.textContent
     );
 
-    let temp = {};
-    for (var i = 0; i < names.length; i++) {
-      temp[names[i]] = rates[i];
-   }
+    let temp = [];
+    for(var i=0;i<names.length;i++){
+      temp.push({name: names[i], winrate: rates[i]});
+    }
     return temp;
   });
 
-  console.log(winrates);
 
   return winrates;
 }
