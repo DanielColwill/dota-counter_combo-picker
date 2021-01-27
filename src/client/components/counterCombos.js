@@ -11,7 +11,6 @@ class CounterCombo extends Component {
       winrates: this.props.winrates,
       heroes: this.props.heroes,
       matchups: [],
-      winrate: 0,
     };
   }
 
@@ -24,24 +23,14 @@ class CounterCombo extends Component {
         });
       });
   }
-  getWinrate() {
-    for (var i = 0; i < this.state.winrates.length; i++) {
-      if (this.state.winrates[i].name == this.state.heroName) {
-        this.setState({
-          winrate: this.state.winrates[i].winrate,
-        });
-      }
-    }
-  }
 
   componentDidMount() {
     console.log(this.state.matchups);
     this.getMatchups();
-    this.getWinrate();
   }
 
   componentDidUpdate() {
-    if (this.state.winrate != 0 && this.state.matchups.length >0) {
+    if (this.state.matchups.length > 0) {
       this.props.handler();
     }
   }
@@ -106,7 +95,6 @@ class CounterCombo extends Component {
             <tr>
               <th class="text-center">Good Against</th>
               <th class="text-center">Countered By</th>
-              <th class="text-center">Winrate</th>
             </tr>
 
             <tr>
@@ -119,7 +107,13 @@ class CounterCombo extends Component {
                     }
                   }
                   if (name !== undefined) {
-                    return <HeroTile heroName={name} id={index.id} />;
+                    return (
+                      <HeroTile
+                        heroName={name}
+                        id={index.id}
+                        winrates={this.state.winrates}
+                      />
+                    );
                   } else {
                     return null;
                   }
@@ -136,12 +130,15 @@ class CounterCombo extends Component {
                         }
                       }
 
-                      return <HeroTile heroName={name} id={index.id} />;
+                      return (
+                        <HeroTile
+                          heroName={name}
+                          id={index.id}
+                          winrates={this.state.winrates}
+                        />
+                      );
                     })
                   : null}
-              </td>
-              <td class="border-0 text-center align-middle">
-                {this.state.winrate}
               </td>
             </tr>
           </tbody>

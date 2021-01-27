@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Spinner } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 import CounterCombo from "./counterCombos";
-
 class HeroTile extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +14,7 @@ class HeroTile extends Component {
       open: false,
       loading: false,
       temp: "",
+      winrate: 0,
     };
   }
 
@@ -88,10 +88,20 @@ class HeroTile extends Component {
           heroName={this.props.heroName}
           id={this.props.id}
           handler={() => this.handler()}
-          winrates={this.props.winrates}
+          winrates={this.state.winrates}
         />
       ),
     });
+  }
+
+  componentDidMount() {
+    for (var i = 0; i < this.state.winrates.length; i++) {
+      if (this.state.winrates[i].name == this.state.heroName) {
+        this.setState({
+          winrate: this.state.winrates[i].winrate,
+        });
+      }
+    }
   }
 
   openToggle() {
@@ -121,7 +131,9 @@ class HeroTile extends Component {
           <td id="loadingState" class="align-middle">
             {this.state.loading ? (
               <Spinner animation="border" role="status"></Spinner>
-            ) : null}
+            ) : (
+              this.state.winrate
+            )}
           </td>
         </tr>
         {this.state.open ? this.state.temp : null}

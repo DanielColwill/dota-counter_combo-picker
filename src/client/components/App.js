@@ -8,6 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.sortAlpha = this.sortAlpha.bind(this);
+    this.sortWinrate= this.sortWinrate.bind(this);
     this.sortByKey = this.sortByKey.bind(this);
     this.renderHeroes = this.renderHeroes.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
@@ -16,7 +17,9 @@ class App extends Component {
       heroName: "",
       id: 0,
       search: "",
-      winrates:[]
+      winrates: [],
+      alphaToggle: false,
+      winrateToggle: false,
     };
   }
 
@@ -45,7 +48,6 @@ class App extends Component {
     this.getWinrates();
   }
 
-
   sortByKey(array, key) {
     return array.sort(function (a, b) {
       var x = a[key];
@@ -55,9 +57,35 @@ class App extends Component {
   }
 
   sortAlpha() {
-    this.setState({
-      heroes: this.sortByKey(this.state.heroes, "localized_name"),
-    });
+    if (this.state.alphaToggle === false) {
+      this.setState({
+        heroes: this.sortByKey(this.state.heroes, "localized_name"),
+        alphaToggle: true,
+      });
+      return;
+    } else if (this.state.alphaToggle === true) {
+      this.setState({
+        heroes: this.state.heroes.reverse(),
+        alphaToggle: false,
+      });
+      return;
+    }
+  }
+
+  sortWinrate() {
+    if (this.state.winrateToggle === false) {
+      this.setState({
+        heroes: this.sortByKey(this.state.winrates, "winrate"),
+        alphaToggle: true,
+      });
+      return;
+    } else if (this.state.winrateToggle === true) {
+      this.setState({
+        heroes: this.state.heroes.reverse(),
+        alphaToggle: false,
+      });
+      return;
+    }
   }
 
   renderHeroes() {
@@ -117,7 +145,68 @@ class App extends Component {
               <thead>
                 <tr>
                   <th class="pl-4" onClick={this.sortAlpha} scope="col">
-                    Heroes
+                    Heroes{" "}
+                    {this.state.alphaToggle ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-up-short"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-down-short"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+                        />
+                      </svg>
+                    )}
+                  </th>
+                  <th class="pl-4" onClick={this.sortWinrate} scope="col">
+                    Winrate{" "}
+                    {this.state.winrateToggle ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-up-short"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-down-short"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+                        />
+                      </svg>
+                    )}
                   </th>
                 </tr>
               </thead>
