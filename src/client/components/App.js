@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import Spinner from "react-bootstrap/Spinner";
 import heroData from "../../data/heroes.json";
 import HeroTile from "./HeroTile";
 import NavbarHeader from "./NavbarHeader";
+
 const axios = require("axios");
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.sortAlpha = this.sortAlpha.bind(this);
-    this.sortWinrate= this.sortWinrate.bind(this);
+    this.sortWinrate = this.sortWinrate.bind(this);
     this.sortByKey = this.sortByKey.bind(this);
     this.renderHeroes = this.renderHeroes.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
@@ -20,6 +22,7 @@ class App extends Component {
       winrates: [],
       alphaToggle: false,
       winrateToggle: false,
+      loaded: false,
     };
   }
 
@@ -39,11 +42,12 @@ class App extends Component {
     await axios.get("http://localhost:4000/winrates").then((result) => {
       this.setState({
         winrates: result.data,
+        loaded: true,
       });
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getHeroes();
     this.getWinrates();
   }
@@ -91,12 +95,21 @@ class App extends Component {
   renderHeroes() {
     var list = [];
     if (this.state.search.length === 0) {
-      return this.state.heroes.map((hero, id) => {
+      return this.state.heroes.map((hero, id, temp) => {
+        if (
+          this.state.winrates.some(
+            (item) => item.name === hero.localized_name
+          ) === true
+        ) {
+          temp = this.state.winrates[id].winrate;
+        }
+
         return (
           <HeroTile
             heroes={this.state.heroes}
             heroName={hero.localized_name}
             id={hero.id}
+            winrate={temp}
             winrates={this.state.winrates}
           />
         );
@@ -132,101 +145,112 @@ class App extends Component {
   }
 
   render() {
-    const layout = (
-      <div class="pt-5 container h-100">
-        <div class="row h-25 align-items-center">
-          <div class="col-xs-1"></div>
-          {/* content */}
-          <div class="table-responsive">
-            <table
-              class="table table-hover table-dark w-100 d-block d-md-table"
-              id="heroTable"
-            >
-              <thead>
-                <tr>
-                  <th class="pl-4" onClick={this.sortAlpha} scope="col">
-                    Heroes{" "}
-                    {this.state.alphaToggle ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-arrow-up-short"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-arrow-down-short"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
-                        />
-                      </svg>
-                    )}
-                  </th>
-                  <th class="pl-4" onClick={this.sortWinrate} scope="col">
-                    Winrate{" "}
-                    {this.state.winrateToggle ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-arrow-up-short"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-arrow-down-short"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
-                        />
-                      </svg>
-                    )}
-                  </th>
-                </tr>
-              </thead>
-              {this.state.heroes.length > 0 ? this.renderHeroes() : null}
-            </table>
+    if (this.state.loaded) {
+      // this.sortByKey(this.state.winrates,"name");
+      // console.log(this.state.winrates);
+      const layout = (
+        <div class="pt-5 container h-100">
+          <div class="row h-25 align-items-center">
+            <div class="col-xs-1"></div>
+            {/* content */}
+            <div class="table-responsive">
+              <table
+                class="table table-hover table-dark w-100 d-block d-md-table"
+                id="heroTable"
+              >
+                <thead>
+                  <tr>
+                    <th class="pl-4" onClick={this.sortAlpha} scope="col">
+                      Heroes{" "}
+                      {this.state.alphaToggle ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-arrow-up-short"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-arrow-down-short"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+                          />
+                        </svg>
+                      )}
+                    </th>
+                    <th class="pl-4" onClick={this.sortWinrate} scope="col">
+                      Winrate{" "}
+                      {this.state.winrateToggle ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-arrow-up-short"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-arrow-down-short"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+                          />
+                        </svg>
+                      )}
+                    </th>
+                  </tr>
+                </thead>
+                {this.state.heroes.length > 0 ? this.renderHeroes() : null}
+              </table>
+            </div>
+            <div class="col-xs-1"></div>
           </div>
-          <div class="col-xs-1"></div>
         </div>
-      </div>
-    );
+      );
 
-    return (
-      <div>
-        <NavbarHeader
-          search={this.state.search}
-          updateSearch={this.updateSearch}
-        />
-        {layout}
-      </div>
-    );
+      return (
+        <div>
+          <NavbarHeader
+            search={this.state.search}
+            updateSearch={this.updateSearch}
+          />
+          {layout}
+        </div>
+      );
+    } else {
+      return (
+        <div class="d-flex justify-content-center align-middle">
+          Please wait, fetching most recent data from Dotabuff.com{" "}
+          <Spinner animation="border" role="status"></Spinner>
+        </div>
+      );
+    }
   }
 }
 

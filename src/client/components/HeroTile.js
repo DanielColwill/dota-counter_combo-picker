@@ -14,7 +14,7 @@ class HeroTile extends Component {
       open: false,
       loading: false,
       temp: "",
-      winrate: 0,
+      winrate: this.props.winrate,
     };
   }
 
@@ -88,20 +88,14 @@ class HeroTile extends Component {
           heroName={this.props.heroName}
           id={this.props.id}
           handler={() => this.handler()}
-          winrates={this.state.winrates}
+          winrates={this.props.winrates}
         />
       ),
     });
   }
 
   componentDidMount() {
-    for (var i = 0; i < this.state.winrates.length; i++) {
-      if (this.state.winrates[i].name == this.state.heroName) {
-        this.setState({
-          winrate: this.state.winrates[i].winrate,
-        });
-      }
-    }
+
   }
 
   openToggle() {
